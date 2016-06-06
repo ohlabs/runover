@@ -1,9 +1,24 @@
 @require 'stylus-mixer'
 
 .runover-content
-  fixed 0
-  overflow hidden
   font-family 'Avenir Next', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif
+  z-index 9999999999999999
 
 .runover-selector
-  background hsla(#e25065, 0.25)
+  position fixed
+  pointer-events none
+  background hsla(#e25065, 0.4)
+  transition opacity 150ms
+  margin -10px
+  padding 10px
+
+  [data-runover-scrolling="true"] &
+    opacity 0
+    transition opacity 150ms !important
+
+  [data-runover-mousemove="false"] &
+    pointer-events all !important
+
+  [data-runover-selecting="false"] &
+    pointer-events none !important
+    opacity 0
