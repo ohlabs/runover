@@ -1,0 +1,14 @@
+{
+  "name": "runover",
+  "version": "0.1.0",
+  "scripts": {
+    "webpack": "webpack"
+  },
+  "devDependencies": {
+    "ohpack-webpack-plugin": "git+ssh://git@bitbucket.org/ohlab/ohpack-webpack-plugin.git",
+    "raw-loader": "^0.5.1",
+    "stylus": "^0.54.5",
+    "stylus-mixer": "git+ssh://git@bitbucket.org/ohlab/stylus-mixer.git",
+    "webpack": "^1.13.1"
+  }
+}
