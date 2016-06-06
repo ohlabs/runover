@@ -13,7 +13,8 @@ module.exports = {
   },
 
   module: { loaders: [
-    { test:/\.styl(us)?$/, loader:OhPack.loaders.stylus }
+    { test:/\.styl(us)?$/, loader:OhPack.loaders.stylus },
+    { test:/\.jsx?$/,      loader:'babel', query: {presets:['es2015']} }
   ]},
 
   plugins: [ new OhPack () ],

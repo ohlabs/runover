@@ -5,6 +5,9 @@
     "webpack": "webpack"
   },
   "devDependencies": {
+    "babel-core": "^6.9.1",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
     "ohpack-webpack-plugin": "git+ssh://git@bitbucket.org/ohlab/ohpack-webpack-plugin.git",
     "raw-loader": "^0.5.1",
     "stylus": "^0.54.5",
