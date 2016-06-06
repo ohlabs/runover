@@ -42,17 +42,14 @@ var RunOver = function ()
   this._.dom.style.appendChild(document.createTextNode(css));
   document.querySelector('head').appendChild(this._.dom.style);
   
-  this._.dom.html.setAttribute('data-runover',this._.state.power);
+  this._.dom.html.setAttribute('data-runover',          this._.state.power);
   this._.dom.html.setAttribute('data-runover-selecting',this._.state.selecting);
   this._.dom.html.setAttribute('data-runover-mousemove',false);
   this._.dom.html.setAttribute('data-runover-scrolling',false);
   
   this._.dom.selector.addEventListener('click',function (ev) {
-    
     ev.preventDefault();
     ev.stopImmediatePropagation();
-    console.log('click');
-    
   });
   
   window.addEventListener('mousemove',this._recalculate.bind(this));
@@ -150,20 +147,14 @@ RunOver.prototype._anotationPosition = function (ev)
 RunOver.prototype._recalculate = function (ev)
 {
   if (ev.type === 'mousemove') {
-    
     this._.state.mouse.x = ev.clientX;
     this._.state.mouse.y = ev.clientY;
-    
     if (!this._.state.power || !this._.state.selecting) return;
-    
     clearTimeout(this._.tm.mousemove);
-    
     this._.dom.html.setAttribute('data-runover-mousemove',true);
-    
-    this._.tm.mousemove = setTimeout(function(){
+    this._.tm.mousemove = setTimeout(() => {
       this._.dom.html.setAttribute('data-runover-mousemove',false);
-    }.bind(this),20);
-    
+    },20);
     this._requestAnimationFrame (ev,'selectorTarget');
   }
   
@@ -171,12 +162,10 @@ RunOver.prototype._recalculate = function (ev)
     if (!this._.state.power) return;
     clearTimeout(this._.tm.scroll);
     this._.dom.html.setAttribute('data-runover-scrolling',true);
-    this._.tm.scroll = setTimeout(function(){
-      this._.dom.html.setAttribute('data-runover-scrolling',false);
-    }.bind(this),50);
-    if (this._.state.selecting) {
-      this._requestAnimationFrame (ev,'selectorPosition');
-    }
+    this._.tm.scroll = setTimeout(() => this
+    ._.dom.html.setAttribute('data-runover-scrolling',false),50);
+    if (this._.state.selecting) this
+    ._requestAnimationFrame (ev,'selectorPosition');
     this._requestAnimationFrame (ev,'anotationPosition');
   }
 }
