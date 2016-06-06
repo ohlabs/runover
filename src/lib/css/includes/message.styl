@@ -1,0 +1,48 @@
+.runover-message
+  text-align left
+  position relative
+  display table
+  margin 20px auto 0
+  padding 16px
+  box-sizing border-box
+  background white
+  border-radius 4px
+  box-shadow 0 2px 8px hsla(black, 0.2)
+  font-size 0.875rem
+  font-weight 500
+  color #555
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+  opacity 0
+  transform translateY(-5px)
+  transition opacity 500ms, transform 500ms
+  transition-delay 200ms
+  pointer-events none
+  transform-style preserve-3d
+
+  &:before
+  &:after
+    content ''
+    position absolute
+    top 0
+    left 50%
+    margin -6px
+    width 12px
+    height 12px
+    border-radius 2px
+
+  &:before
+    box-shadow 0 2px 8px hsla(black, 0.2)
+    transform rotateZ(45deg) translateZ(-1px)
+    z-index -1
+
+  &:after
+    transform rotateZ(45deg)
+    background white
+
+.runover-pin:hover + .runover-message
+.runover-message:hover
+  opacity 1
+  transform translateY(0)
+  transition-delay 0ms
+  pointer-events all

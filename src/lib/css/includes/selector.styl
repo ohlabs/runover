@@ -1,0 +1,17 @@
+.runover-selector
+  position fixed
+  pointer-events none
+  background hsla(red, 0.3)
+  transition opacity 150ms
+  margin -10px 0 0 -10px
+  padding 10px
+
+  [data-runover-selecting='false'] &
+  [data-runover-scrolling='true'] &
+    opacity 0
+
+  [data-runover-mousemove='false'] &
+    pointer-events initial
+
+  [data-runover-mousemove='true'] &
+    transition all 150ms
