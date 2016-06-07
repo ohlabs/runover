@@ -98,9 +98,9 @@ var RunOver = function ()
   // Attach mouse and environment
   // interactions event handlers
   
-  window.addEventListener('mousemove',  this._recalculate.bind(this));
-  window.addEventListener('mousewheel', this._recalculate.bind(this));
-  window.addEventListener('resize',     this._recalculate.bind(this));
+  window.addEventListener('mousemove', this._recalculate.bind(this));
+  window.addEventListener('scroll',    this._recalculate.bind(this));
+  window.addEventListener('resize',    this._recalculate.bind(this));
   
   // Attach taster handlers on shift
   // to be used as the selection mode trigger
@@ -108,8 +108,6 @@ var RunOver = function ()
   window.addEventListener('keyup',  this.stopSelecting.bind(this));
   window.addEventListener('keydown',(ev) =>
   (ev.keyCode || ev.which) == 16 && this.startSelecting());
-  
-  window.addEventListener('keydown',function (ev) { console.log(ev) });
   
   this.bound._cycle();
 }
@@ -298,7 +296,7 @@ RunOver.prototype._recalculate = function (ev)
     // Reset the timeout for window scroll/resize
     // if we're in a proper event
     
-    case 'mousewheel':
+    case 'scroll':
     case 'resize':
     
     clearTimeout(this.misc.tm.scroll);

@@ -60,17 +60,6 @@ RunoverSelector.prototype.recalculate = function (x,y)
   this._highlighter.style.left   = rect.left  .toFixed(0) + 'px';
   this._highlighter.style.width  = rect.width .toFixed(0) + 'px';
   this._highlighter.style.height = rect.height.toFixed(0) + 'px';
-  
-/*
-  this._highlighter.setAttribute(
-    
-    'style',
-    
-    'top:'   + rect.top   + 'px;left:'   + rect.left   + 'px;' +
-    'width:' + rect.width + 'px;height:' + rect.height + 'px;'
-    
-  );
-*/
 }
 
 module.exports = RunoverSelector;
