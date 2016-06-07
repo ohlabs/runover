@@ -8,4 +8,8 @@
   position absolute
   will-change transform
   pointer-events initial
-  transition transform 400ms
+  transition transform 600ms
+
+  for index in 1..20
+    &:nth-child({index})
+      transition-delay index * (-25ms)
