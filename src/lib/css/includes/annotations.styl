@@ -8,11 +8,11 @@
   position absolute
   will-change transform
   pointer-events initial
-  transition-property transform
-  transition transform 1000ms
+  // transition-property transform
+  transition transform 600ms
 
-  for index in 1..20
+  for index in 1..50
     &:nth-child({index})
       $random = random(25, 150)
-      transition-duration 1000ms - ( $random * (-1ms) )
+      transition-duration 600ms - ( $random * (-1ms) )
       transition-delay $random * (-1ms)
