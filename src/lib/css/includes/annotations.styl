@@ -1,6 +1,9 @@
 .runover-annotations
-  fixed top left
+  pointer-events none
+  fixed 0
+  z-index 9999999999999999 // because of reasons
 
 .runover-annotation
-  position fixed
+  position absolute
   will-change transform
+  pointer-events initial
