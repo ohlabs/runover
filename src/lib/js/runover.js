@@ -28,6 +28,7 @@ var RunOver = function ()
    * @var {object} bound
    */
   this.bound = {
+    _cycle:       this._cycle.bind(this),
     _selector:    this._selector.bind(this),
     _annotations: this._annotations.bind(this),
     useSelection: this.useSelection.bind(this)
@@ -97,9 +98,9 @@ var RunOver = function ()
   // Attach mouse and environment
   // interactions event handlers
   
-  window.addEventListener('mousemove',this._recalculate.bind(this));
-  window.addEventListener('scroll',   this._recalculate.bind(this));
-  window.addEventListener('resize',   this._recalculate.bind(this));
+  window.addEventListener('mousemove',  this._recalculate.bind(this));
+  window.addEventListener('mousewheel', this._recalculate.bind(this));
+  window.addEventListener('resize',     this._recalculate.bind(this));
   
   // Attach taster handlers on shift
   // to be used as the selection mode trigger
@@ -109,6 +110,8 @@ var RunOver = function ()
   (ev.keyCode || ev.which) == 16 && this.startSelecting());
   
   window.addEventListener('keydown',function (ev) { console.log(ev) });
+  
+  this.bound._cycle();
 }
 
 /**
@@ -226,6 +229,7 @@ RunOver.prototype._callWithAF = function (id,cb)
 {
   window.cancelAnimationFrame  (this.misc.af[id]); this.misc.af[id] =
   window.requestAnimationFrame (cb);
+//   cb ();
 }
 
 /**
@@ -294,23 +298,22 @@ RunOver.prototype._recalculate = function (ev)
     // Reset the timeout for window scroll/resize
     // if we're in a proper event
     
-    case 'scroll':
+    case 'mousewheel':
     case 'resize':
-    
-    this._callWithAF ('anotations',this.bound._annotations);
     
     clearTimeout(this.misc.tm.scroll);
     this.dom.html.setAttribute('data-runover-scrolling',true);
     this.misc.tm.scroll = setTimeout(() =>
     this.dom.html.setAttribute('data-runover-scrolling',false),50);
-    
   }
     
-  // Recalculate selector
-  // target if we're in a selecting mode
-  
-  this.state.selecting &&
-  this._callWithAF ('selector',this.bound._selector);
+  this.state.selecting && this._selector();
+}
+
+RunOver.prototype._cycle = function ()
+{
+  this._annotations();
+  window.requestAnimationFrame(this.bound._cycle);
 }
 
 /**
