@@ -60,7 +60,7 @@ RunoverSelector.prototype.recalculate = function (x,y)
     
     'style',
     
-    'top:'   + rect.top   + 'px;left:'   + rect.left   + 'px;'+
+    'top:'   + rect.top   + 'px;left:'   + rect.left   + 'px;' +
     'width:' + rect.width + 'px;height:' + rect.height + 'px;'
     
   );

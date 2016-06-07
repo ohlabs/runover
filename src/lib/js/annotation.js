@@ -69,8 +69,8 @@ RunoverAnnotation.prototype.recalculate = function ()
 {
   var rect = this.target.getRect();
   
-  var x = rect.left + rect.width  - 40;
-  var y = rect.top  + rect.height - 40;
+  var x = (rect.left + rect.width  - 40).toFixed(0);
+  var y = (rect.top  + rect.height - 40).toFixed(0);
   
   this.dom.annotation.setAttribute('style','transform: translate('+x+'px,'+y+'px)');
 }
