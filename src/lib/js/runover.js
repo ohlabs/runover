@@ -311,8 +311,8 @@ RunOver.prototype._recalculate = function (ev)
 RunOver.prototype._cycle = function ()
 {
   this._annotations();
-  setTimeout(this.bound._cycle,200);
-//   window.requestAnimationFrame(this.bound._cycle);
+//   setTimeout(this.bound._cycle,200);
+  window.requestAnimationFrame(this.bound._cycle);
 }
 
 /**
