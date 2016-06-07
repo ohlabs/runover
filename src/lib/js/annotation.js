@@ -72,16 +72,16 @@ RunoverAnnotation.prototype.recalculate = function ()
   var x = (rect.left + rect.width  - 40).toFixed(0);
   var y = (rect.top  + rect.height - 40).toFixed(0);
   
+/*
   var del = Math.floor((Math.random() * -75) - 25);
-  var dur = 600 - del;
+  var dur = 300 - (del * 2);
   
   this.dom.annotation.style.transform = 'translate('+x+'px,'+y+'px)';
-/*
   this.dom.annotation.style.transitionDelay    = del + 'ms';
   this.dom.annotation.style.transitionDuration = dur + 'ms';
 */
   
-//   this.dom.annotation.setAttribute('style','transform: translate('+x+'px,'+y+'px)');
+  this.dom.annotation.setAttribute('style','transform: translate('+x+'px,'+y+'px)');
 }
 
 module.exports = RunoverAnnotation;
