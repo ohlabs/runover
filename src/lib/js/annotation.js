@@ -1,6 +1,6 @@
 var defaultrect = { height:0,width:0,top:0,bottom:0 };
 
-var Annotation = function (target,rect)
+var RunoverAnnotation = function (target,rect)
 {
   this.target = target;
   
@@ -42,12 +42,12 @@ var Annotation = function (target,rect)
   this.recalculate();
 }
 
-Annotation.prototype.getElement = function ()
+RunoverAnnotation.prototype.getElement = function ()
 {
   return this.dom.annotation;
 }
 
-Annotation.prototype.select = function ()
+RunoverAnnotation.prototype.select = function ()
 {
   if (this._selected) return this;
   this._selected = true;
@@ -56,7 +56,7 @@ Annotation.prototype.select = function ()
   this.dom.text.focus();
 }
 
-Annotation.prototype.deselect = function ()
+RunoverAnnotation.prototype.deselect = function ()
 {
   if (!this._selected) return this;
   this._selected = false;
@@ -65,18 +65,14 @@ Annotation.prototype.deselect = function ()
   this.dom.text.disabled = true;
 }
 
-Annotation.prototype.recalculate = function ()
+RunoverAnnotation.prototype.recalculate = function ()
 {
   var rect = this.target.getRect();
   
   var x = rect.left + rect.width  - 40;
-  var y = rect.rop  + rect.height - 40;
+  var y = rect.top  + rect.height - 40;
   
-    this.dom.annotation.style.webkitTransform
-  = this.dom.annotation.style.mozTransform
-  = this.dom.annotation.style.msTransform
-  = this.dom.annotation.style.transform
-  = 'translate('+x+'px,'+y+'px)';
+  this.dom.annotation.style.transform = 'translate('+x+'px,'+y+'px)';
 }
 
-module.exports = Annotation;
+module.exports = RunoverAnnotation;
