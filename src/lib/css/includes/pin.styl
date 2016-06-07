@@ -16,6 +16,7 @@
   box-shadow inset 0 1px 1px 0 hsla(black, 0.1), 0 1px 1px 0 hsla(black, 0.25)
   user-select none
   cursor default
+  background #e25065
 
   &:after
     content ''
@@ -39,18 +40,6 @@
     z-index -1
 
   &:before
-    animation pulse 2000ms infinite
-
-  &:nth-child(1)
-    background #e25065
-
-  &:nth-child(2)
-    background #7ccc4d
-
-@keyframes pulse
-  50%
-    transform scale(0.75)
-    opacity 0
-  50.1%
-    transform scale(0)
-    opacity 1
+    animate 2000ms infinite,        \
+      50.0% scale(0.75) opacity(0), \
+      50.1% scale(0) opacity(1)
