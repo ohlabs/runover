@@ -56,10 +56,14 @@ RunoverSelector.prototype.recalculate = function (x,y)
   ? element.getBoundingClientRect()
   : defaultrect;
   
-  this._highlighter.style.top    = rect.top;
-  this._highlighter.style.left   = rect.left;
-  this._highlighter.style.width  = rect.width;
-  this._highlighter.style.height = rect.height;
+  this._highlighter.setAttribute(
+    
+    'style',
+    
+    'top:'   + rect.top   + 'px;left:'   + rect.left   + 'px;'+
+    'width:' + rect.width + 'px;height:' + rect.height + 'px;'
+    
+  );
 }
 
 module.exports = RunoverSelector;

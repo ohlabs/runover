@@ -107,6 +107,8 @@ var RunOver = function ()
   window.addEventListener('keyup',  this.stopSelecting.bind(this));
   window.addEventListener('keydown',(ev) =>
   (ev.keyCode || ev.which) == 16 && this.startSelecting());
+  
+  window.addEventListener('keydown',function (ev) { console.log(ev) });
 }
 
 /**

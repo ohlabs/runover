@@ -72,7 +72,7 @@ RunoverAnnotation.prototype.recalculate = function ()
   var x = rect.left + rect.width  - 40;
   var y = rect.top  + rect.height - 40;
   
-  this.dom.annotation.style.transform = 'translate('+x+'px,'+y+'px)';
+  this.dom.annotation.setAttribute('style','transform: translate('+x+'px,'+y+'px)');
 }
 
 module.exports = RunoverAnnotation;
