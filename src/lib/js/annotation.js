@@ -69,8 +69,14 @@ Annotation.prototype.recalculate = function ()
 {
   var rect = this.target.getRect();
   
-  this.dom.annotation.style.left = rect.left + rect.width  - 40;
-  this.dom.annotation.style.top  = rect.top  + rect.height - 40;
+  var x = rect.left + rect.width  - 40;
+  var y = rect.rop  + rect.height - 40;
+  
+    this.dom.annotation.style.webkitTransform
+  = this.dom.annotation.style.mozTransform
+  = this.dom.annotation.style.msTransform
+  = this.dom.annotation.style.transform
+  = 'translate('+x+'px,'+y+'px)';
 }
 
 module.exports = Annotation;

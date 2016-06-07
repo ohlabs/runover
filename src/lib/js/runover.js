@@ -295,11 +295,12 @@ RunOver.prototype._recalculate = function (ev)
     case 'scroll':
     case 'resize':
     
+    this._callWithAF ('anotations',this.bound._annotations);
+    
     clearTimeout(this.misc.tm.scroll);
     this.dom.html.setAttribute('data-runover-scrolling',true);
     this.misc.tm.scroll = setTimeout(() =>
     this.dom.html.setAttribute('data-runover-scrolling',false),50);
-    this._callWithAF ('anotations',this.bound._annotations);
     
   }
     
