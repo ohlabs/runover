@@ -11,6 +11,7 @@
   padding 10px
   pointer-events none
   background hsla(red, 0.25)
+  opacity 0
   transition opacity 150ms
 
   // make sure the selector is in
@@ -18,9 +19,15 @@
   z-index 10**20
   transform translateZ(10**20px)
 
-  [data-runover-selecting='false'] &
-  [data-runover-motion='true'] &
-    opacity 0
+  /**
+   * Shows selector while selecting mode is
+   * activated, and there is no motion.
+   * @since 0.1.0
+   */
+
+  [data-runover-selecting='true'] &
+  [data-runover-motion='false'] &
+    opacity 1
 
   [data-runover-selecting='true'][data-runover-cursor='false'] &
     pointer-events initial
