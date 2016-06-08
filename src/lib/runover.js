@@ -97,9 +97,13 @@ var RunOver = function ()
     this.dom.doc.setAttribute('data-runover-motion',false) }
     this.state.motion = false;
     
+  var cursorrc = () => this.selector
+    .recalculate(this.state.mouse.x,this.state.mouse.y);
+    
   var recalccb = (ev) => {
     if (!this.state.power) return;
-    if (ev.type == 'mousemove') { 
+    if (ev.type == 'mousemove') {
+      
       this.state.mouse.x = ev.clientX;
       this.state.mouse.y = ev.clientY;
       clearTimeout(timeouts.cursor);
@@ -110,18 +114,12 @@ var RunOver = function ()
       clearTimeout(timeouts.motion);
       this.dom.doc.setAttribute('data-runover-motion',true);
       this.state.motion = true;
-      timeouts.motion = setTimeout(motioncb,50) } }
+      timeouts.motion = setTimeout(motioncb,50) }
+    this.state.selecting && Shutter.once(cursorrc) }
     
   window.addEventListener('mousemove', (ev) => recalccb(ev));
   window.addEventListener('scroll',    (ev) => recalccb(ev));
   window.addEventListener('resize',    (ev) => recalccb(ev));
-      
-  Shutter.push(() =>
-    this.state.power &&
-    this.state.selecting &&
-    this.state.cursor &&
-    (() => console.log(this.cursor) || true)() &&
-    this.selector.recalculate(this.state.mouse.x,this.state.mouse.y));
   
   Shutter.push(() =>
     this.state.power &&
