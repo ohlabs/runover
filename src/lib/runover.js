@@ -90,12 +90,12 @@ var RunOver = function ()
   var timeouts = {}
   
   var cursorcb = () => {
-    this.state.cursor = false;
     this.dom.doc.setAttribute('data-runover-cursor',false) }
+    this.state.cursor = false;
     
   var motioncb = () => {
-    this.state.motion = false;
     this.dom.doc.setAttribute('data-runover-motion',false) }
+    this.state.motion = false;
     
   var recalccb = (ev) => {
     if (!this.state.power) return;
