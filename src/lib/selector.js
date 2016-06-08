@@ -7,6 +7,7 @@ var RunoverSelector = function (mask)
 {
   EE.call(this);
   
+  this._last_rect = helpers.getDefaultRect();
   this._mask = mask || document.createElement('div');
   this._mask.addEventListener('click',(ev) => {
     ev.preventDefault();
@@ -48,13 +49,15 @@ RunoverSelector.prototype.getHighlighter = function ()
 
 RunoverSelector.prototype.recalculate = function (x,y)
 {
-  this._mask.setAttribute('data-runover-falltrough',true);
+  this._mask.style.display = 'none';
   
   var element
   = this._element
   = document.elementFromPoint(x,y);
   
-  this._mask.setAttribute('data-runover-falltrough',false);
+  this._mask.style.display = 'block';
+  
+  if (element === this._mask) { this._element = null; return }
   
   var rect
   = this._rect
@@ -62,10 +65,23 @@ RunoverSelector.prototype.recalculate = function (x,y)
   ? element.getBoundingClientRect()
   : helpers.getDefaultRect();
   
-  this._mask.style.top    = rect.top   .toFixed(0) + 'px';
-  this._mask.style.left   = rect.left  .toFixed(0) + 'px';
-  this._mask.style.width  = rect.width .toFixed(0) + 'px';
-  this._mask.style.height = rect.height.toFixed(0) + 'px';
+  var top    = opa(this._last_rect.top,   rect.top);
+  var left   = opa(this._last_rect.left,  rect.left);
+  var width  = opa(this._last_rect.width, rect.width);
+  var height = opa(this._last_rect.height,rect.height);
+  
+  this._mask.style.top    = top   .toFixed(0) + 'px';
+  this._mask.style.left   = left  .toFixed(0) + 'px';
+  this._mask.style.width  = width .toFixed(0) + 'px';
+  this._mask.style.height = height.toFixed(0) + 'px';
+  
+  this._last_rect = { top:top,left:left,width:width,height:height };
+}
+
+function opa (curr,next)
+{
+  var diff = Math.abs(curr-next) * 0.2;
+  return curr > next ? (curr - diff) : (curr + diff);
 }
 
 assign (RunoverSelector.prototype,EE.prototype);

@@ -114,12 +114,18 @@ var RunOver = function ()
       clearTimeout(timeouts.motion);
       this.dom.doc.setAttribute('data-runover-motion',true);
       this.state.motion = true;
-      timeouts.motion = setTimeout(motioncb,50) }
-    this.state.selecting && Shutter.once(cursorrc) }
+      timeouts.motion = setTimeout(motioncb,50) } }
+//     this.state.selecting && Shutter.once(cursorrc) }
     
   window.addEventListener('mousemove', (ev) => recalccb(ev));
   window.addEventListener('scroll',    (ev) => recalccb(ev));
   window.addEventListener('resize',    (ev) => recalccb(ev));
+  
+  Shutter.push(() =>
+    this.state.power &&
+    this.state.selecting &&
+    this.state.cursor &&
+    this.selector.recalculate(this.state.mouse.x,this.state.mouse.y));
   
   Shutter.push(() =>
     this.state.power &&
@@ -220,7 +226,7 @@ RunOver.prototype.useSelection = function (target,rect)
   if (this.annotations[path]) {
     this.annotations[path].select();
   } else {
-    this.annotations[path] = new RunoverAnnotation (target,rect);
+    this.annotations[path] = new Annotation (target,rect);
     this.dom.annotations.appendChild(this.annotations[path].getElement());
     this.annotations[path].select();
   }
