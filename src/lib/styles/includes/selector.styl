@@ -19,11 +19,11 @@
   transform translateZ(10**20px)
 
   [data-runover-selecting='false'] &
-  [data-runover-scrolling='true'] &
+  [data-runover-motion='true'] &
     opacity 0
 
-  [data-runover-selecting='true'][data-runover-mousemove='false'] &
+  [data-runover-selecting='true'][data-runover-cursor='false'] &
     pointer-events initial
 
-  [data-runover-mousemove='true'] &
+  [data-runover-cursor='true'] &
     transition all 200ms
