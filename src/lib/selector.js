@@ -1,7 +1,7 @@
 var RunoverTarget = require('./target');
 var EE = require('events').EventEmitter;
 var assign = require('lodash/assign');
-var utils = require('./utils/helpers');
+var helpers = require('./utils/helpers');
 
 var RunoverSelector = function (highlighter)
 {
@@ -15,7 +15,7 @@ var RunoverSelector = function (highlighter)
   });
   
   this._element = null;
-  this._rect = utils.getDefaultRect();
+  this._rect = helpers.getDefaultRect();
   
 }
 
@@ -56,7 +56,7 @@ RunoverSelector.prototype.recalculate = function (x,y)
   = this._rect
   = element
   ? element.getBoundingClientRect()
-  : utils.getDefaultRect();
+  : helpers.getDefaultRect();
   
   this._highlighter.style.top    = rect.top   .toFixed(0) + 'px';
   this._highlighter.style.left   = rect.left  .toFixed(0) + 'px';

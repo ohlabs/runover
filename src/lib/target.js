@@ -1,4 +1,4 @@
-var utils = require('./utils/helpers');
+var helpers = require('./utils/helpers');
 
 var RunoverTarget = function (element,points)
 {
@@ -78,7 +78,7 @@ RunoverTarget.prototype.getRect = function ()
 {
   return this._element
   ? this._element.getBoundingClientRect()
-  : utils.getDefaultRect();
+  : helpers.getDefaultRect();
 }
 
 RunoverTarget.prototype.isValid = function ()
