@@ -103,12 +103,13 @@ var RunOver = function ()
       this.state.mouse.x = ev.clientX;
       this.state.mouse.y = ev.clientY;
       clearTimeout(timeouts.cursor);
-      this.state.cursor = true;
       this.dom.doc.setAttribute('data-runover-cursor',true);
+      this.state.cursor = true;
       timeouts.cursor = setTimeout(cursorcb,50) }
     if (ev.type == 'scroll' || ev.type == 'resize') {
       clearTimeout(timeouts.motion);
       this.dom.doc.setAttribute('data-runover-motion',true);
+      this.state.motion = true;
       timeouts.motion = setTimeout(motioncb,50) } }
     
   window.addEventListener('mousemove', (ev) => recalccb(ev));
@@ -118,6 +119,7 @@ var RunOver = function ()
   Shutter.push(() =>
     this.state.power &&
     this.state.selecting &&
+    this.state.cursor &&
     this.selector.recalculate(this.state.mouse.x,this.state.mouse.y));
   
   Shutter.push(() =>
