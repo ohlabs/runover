@@ -120,6 +120,7 @@ var RunOver = function ()
     this.state.power &&
     this.state.selecting &&
     this.state.cursor &&
+    (() => console.log(this.cursor) || true)() &&
     this.selector.recalculate(this.state.mouse.x,this.state.mouse.y));
   
   Shutter.push(() =>
