@@ -1,0 +1,27 @@
+/**
+ * Runover (style)
+ * ---------------
+ * Sets runover base styling.
+ * @since 0.1.0
+ */
+
+.runover-content
+  font-family 'Avenir Next', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif
+
+/**
+ * Disables user select for all elements on page
+ * except runover content, while in selecting mode.
+ * @since 0.1.0
+ */
+
+[data-runover-selecting="true"] *:not([class^='runover-'])
+  user-select none
+
+/**
+ * Disables pointer events for all elements while scrolling.
+ * Optimizes overall scrolling performance.
+ * @since 0.1.0
+ */
+
+[data-runover-scrolling='true'] *
+  pointer-events none !important

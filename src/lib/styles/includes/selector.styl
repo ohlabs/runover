@@ -1,12 +1,22 @@
+/**
+ * Selector (style)
+ * ----------------
+ * Handles selector styling.
+ * @since 0.1.0
+ */
+
 .runover-selector
   position fixed
-  pointer-events none
-  background hsla(red, 0.3)
-  transition opacity 150ms
   margin -10px 0 0 -10px
   padding 10px
-  z-index 9999999999999999 // because of reasons
-  transform translateZ(9999999999999999px) // because of the same reasons
+  pointer-events none
+  background hsla(red, 0.25)
+  transition opacity 150ms
+
+  // make sure the selector is in
+  // front of available content
+  z-index 10**20
+  transform translateZ(10**20px)
 
   [data-runover-selecting='false'] &
   [data-runover-scrolling='true'] &
@@ -16,4 +26,4 @@
     pointer-events initial
 
   [data-runover-mousemove='true'] &
-    transition all 150ms
+    transition all 200ms

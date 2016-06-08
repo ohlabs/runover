@@ -1,14 +1,26 @@
+/**
+ * Annotations (style)
+ * -------------------
+ * Handles annotations positioning.
+ * @since 0.1.0
+ */
+
 .runover-annotations
-  pointer-events none
   fixed 0
-  backface-visibility hidden
-  z-index 9999999999999999 // because of reasons
+  pointer-events none
+
+  // make sure the annotations are
+  // in front of available content
+  z-index 10**20
 
 .runover-annotation
   position absolute
+  pointer-events auto
   will-change transform
-  pointer-events initial
-  // transition-property transform
+
+  // @TODO Remove the following
+  // after handling it in js
+
   transition transform 600ms
 
   for index in 1..50
