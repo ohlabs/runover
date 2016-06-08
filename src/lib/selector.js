@@ -1,20 +1,22 @@
-var defaultrect = { height:0,width:0,top:0,bottom:0 };
 var RunoverTarget = require('./target');
+var EE = require('events').EventEmitter;
+var assign = require('lodash/assign');
+var utils = require('./utils/helpers');
 
-var RunoverSelector = function (wrap,cb)
+var RunoverSelector = function (highlighter)
 {
-  this._highlighter = document.createElement('div');
-  this._highlighter.setAttribute('class','runover-selector');
-  this._element = null;
-  this._rect = defaultrect;
+  EE.call(this);
   
-  wrap.appendChild(this._highlighter);
+  this._highlighter = highlighter || document.createElement('div');
   this._highlighter.addEventListener('click',(ev) => {
     ev.preventDefault();
     ev.stopImmediatePropagation();
-    if (!this._element) return;
-    cb (new RunoverTarget(this._element),this._rect);
+    this.emit('select',new RunoverTarget(this._element),this._rect);
   });
+  
+  this._element = null;
+  this._rect = utils.getDefaultRect();
+  
 }
 
 RunoverSelector.prototype.getTarget = function ()
@@ -54,12 +56,14 @@ RunoverSelector.prototype.recalculate = function (x,y)
   = this._rect
   = element
   ? element.getBoundingClientRect()
-  : defaultrect;
+  : utils.getDefaultRect();
   
   this._highlighter.style.top    = rect.top   .toFixed(0) + 'px';
   this._highlighter.style.left   = rect.left  .toFixed(0) + 'px';
   this._highlighter.style.width  = rect.width .toFixed(0) + 'px';
   this._highlighter.style.height = rect.height.toFixed(0) + 'px';
 }
+
+assign (RunoverSelector.prototype,EE.prototype);
 
 module.exports = RunoverSelector;
