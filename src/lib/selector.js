@@ -20,7 +20,9 @@ var RunoverSelector = function (mask)
   this.dom.mask.addEventListener('click',(ev) => {
     ev.preventDefault();
     ev.stopImmediatePropagation();
-    this.emit('select',new Target(this.state.element),this.state.rect);
+    var x = (ev.clientX - this.state.rect.left) / this.state.rect.width;
+    var y = (ev.clientY - this.state.rect.top)  / this.state.rect.height;
+    this.emit('select',new Target(this.state.element),this.state.rect,x,y);
   });
 }
 

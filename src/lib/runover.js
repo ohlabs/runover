@@ -34,9 +34,9 @@ var RunOver = function ()
   
   /**
    * Stores session annotations
-   * @var {object} annotations
+   * @var {array} annotations
    */
-  this.annotations = {};
+  this.annotations = [];
 
   // Flush initial state into the
   // dom (data-attributes)
@@ -103,7 +103,6 @@ var RunOver = function ()
   var recalccb = (ev) => {
     if (!this.state.power) return;
     if (ev.type == 'mousemove') {
-      
       this.state.mouse.x = ev.clientX;
       this.state.mouse.y = ev.clientY;
       clearTimeout(timeouts.cursor);
@@ -115,7 +114,6 @@ var RunOver = function ()
       this.dom.doc.setAttribute('data-runover-motion',true);
       this.state.motion = true;
       timeouts.motion = setTimeout(motioncb,50) } }
-//     this.state.selecting && Shutter.once(cursorrc) }
     
   window.addEventListener('mousemove', (ev) => recalccb(ev));
   window.addEventListener('scroll',    (ev) => recalccb(ev));
@@ -140,7 +138,7 @@ var RunOver = function ()
   window.addEventListener('keydown',(ev) =>
   (ev.keyCode || ev.which) == 16 && this.startSelecting());
   
-  this.selector.on('select',(t,r) => this.useSelection(t,r));
+  this.selector.on('select',(t,r,x,y) => this.useSelection(t,r,x,y));
 }
 
 /**
@@ -215,43 +213,12 @@ RunOver.prototype.stopSelecting = function ()
  *
  * @since 0.1.0
  */
-RunOver.prototype.useSelection = function (target,rect)
-{ console.log(target,rect);
-  if (
-    !this.state.power ||
-    !this.state.selecting
-  ) return this;
-  
-  var path = target.getPath();
-  
-  if (this.annotations[path]) {
-    this.annotations[path].select();
-  } else {
-    this.annotations[path] = new Annotation (target,rect);
-    this.dom.annotations.appendChild(this.annotations[path].getElement());
-    this.annotations[path].select();
-  }
-}
-
-/**
- * Recalculate the positions of the annotations
- * currently drawn. MUST be attached to some kind
- * of execution regulator like requestAnimationFrame system
- *
- * @param {Event} ev - Event to be passed on
- * @since 0.1.0
- */
-RunOver.prototype._annotations = function (ev)
-{ 
-  Object.keys(this.annotations).forEach((a) =>
-  this.annotations[a].recalculate());
-}
-
-RunOver.prototype._cycle = function ()
+RunOver.prototype.useSelection = function (target,rect,x,y)
 {
-  this._annotations();
-//   setTimeout(this.bound._cycle,200);
-  window.requestAnimationFrame(this.bound._cycle);
+  var annotation = new Annotation (target,rect,x,y);
+  this.annotations.push(annotation);
+  this.dom.annotations.appendChild(annotation.getElement());
+  annotation.select();
 }
 
 /**

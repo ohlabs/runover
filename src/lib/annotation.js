@@ -1,11 +1,11 @@
 var helpers = require('./utils/helpers');
 
-var RunoverAnnotation = function (target,rect)
+var RunoverAnnotation = function (target,rect,x,y)
 {
   this.target = target;
   
   this.dom   = {};
-  this.data  = { content:'',stats:{} };
+  this.data  = { content:'',stats:{},x:x||0,y:y||0 };
   this.state = {
     target:   target,
     rect:     rect,
@@ -74,13 +74,13 @@ RunoverAnnotation.prototype.recalculate = function ()
   
   var cx = typeof this.state.cx === 'number'
   ? this.state.cx
-  : rect.left + rect.width - 40;
+  : rect.left + (rect.width  * this.data.x);
   var cy = typeof this.state.cy === 'number'
   ? this.state.cy
-  : rect.top + rect.height - 40;
+  : rect.top  + (rect.height * this.data.y);
   
-  var tx = rect.left + rect.width  - 40;
-  var ty = rect.top  + rect.height - 40;
+  var tx = rect.left + (rect.width  * this.data.x);
+  var ty = rect.top  + (rect.height * this.data.y);
   
   if (cx === tx && cy === ty) {
     var nx = tx;
