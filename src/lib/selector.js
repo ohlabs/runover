@@ -1,4 +1,4 @@
-var RunoverTarget = require('./target');
+var Target = require('./target');
 var EE = require('events').EventEmitter;
 var assign = require('lodash/assign');
 var helpers = require('./utils/helpers');
@@ -7,81 +7,88 @@ var RunoverSelector = function (mask)
 {
   EE.call(this);
   
-  this._last_rect = helpers.getDefaultRect();
-  this._mask = mask || document.createElement('div');
-  this._mask.addEventListener('click',(ev) => {
+  this.state = {
+    mask:    null,
+    rect:    null,
+    element: null
+  };
+  
+  this.dom = {
+    mask: mask || document.createElement('div')
+  };
+  
+  this.dom.mask.addEventListener('click',(ev) => {
     ev.preventDefault();
     ev.stopImmediatePropagation();
-    this.emit('select',new RunoverTarget(this._element),this._rect);
+    this.emit('select',new Target(this.state.element),this.state.rect);
   });
-  
-  this._rect = helpers.getDefaultRect();
-  this._element = null;
-  
 }
 
 RunoverSelector.prototype.getTarget = function ()
 {
-  return this._element
-  ? new RunoverTarget (this._element)
+  return this.state.element
+  ? new RunoverTarget (this.state.element)
   : null;
 }
 
 RunoverSelector.prototype.hasElement = function ()
 {
-  return this._element !== null;
+  return this.state.element !== null;
 }
 
 RunoverSelector.prototype.getElement = function ()
 {
-  return this._element;
+  return this.state.element;
 }
 
 RunoverSelector.prototype.getRect = function ()
 {
-  return this._rect;
+  return this.state.rect;
 }
 
-RunoverSelector.prototype.getHighlighter = function ()
+RunoverSelector.prototype.getMask = function ()
 {
-  return this._mask;
+  return this.dom.mask;
+}
+
+RunoverSelector.prototype.resetMaskPosition = function ()
+{
+  this.state.mask = null;
 }
 
 RunoverSelector.prototype.recalculate = function (x,y)
 {
-  this._mask.style.display = 'none';
+  this.dom.mask.style.display = 'none';
+  var element = document.elementFromPoint(x,y);
+  this.dom.mask.style.display = 'block';
+  if (element === this.dom.mask) return;
+  this.state.element = element;
   
-  var element
-  = this._element
-  = document.elementFromPoint(x,y);
-  
-  this._mask.style.display = 'block';
-  
-  if (element === this._mask) { this._element = null; return }
-  
-  var rect
-  = this._rect
-  = element
+  var rect = this.state.rect = element
   ? element.getBoundingClientRect()
   : helpers.getDefaultRect();
   
-  var top    = opa(this._last_rect.top,   rect.top);
-  var left   = opa(this._last_rect.left,  rect.left);
-  var width  = opa(this._last_rect.width, rect.width);
-  var height = opa(this._last_rect.height,rect.height);
+  var c = this.state.mask !== null
+  ? this.state.mask
+  : rect;
   
-  this._mask.style.top    = top   .toFixed(0) + 'px';
-  this._mask.style.left   = left  .toFixed(0) + 'px';
-  this._mask.style.width  = width .toFixed(0) + 'px';
-  this._mask.style.height = height.toFixed(0) + 'px';
+  if (c === rect) {
+    var n = c
+  } else {
+    var n = {
+      top:    helpers.tween(c.top,rect.top,0.2),
+      left:   helpers.tween(c.left,rect.left,0.2),
+      width:  helpers.tween(c.width,rect.width,0.2),
+      height: helpers.tween(c.height,rect.height,0.2)
+    }
+  }
   
-  this._last_rect = { top:top,left:left,width:width,height:height };
-}
-
-function opa (curr,next)
-{
-  var diff = Math.abs(curr-next) * 0.2;
-  return curr > next ? (curr - diff) : (curr + diff);
+  this.dom.mask.style.top    = n.top    + 'px';
+  this.dom.mask.style.left   = n.left   + 'px';
+  this.dom.mask.style.width  = n.width  + 'px';
+  this.dom.mask.style.height = n.height + 'px';
+  
+  this.state.mask = n;
 }
 
 assign (RunoverSelector.prototype,EE.prototype);

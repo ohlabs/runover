@@ -135,7 +135,8 @@ var RunOver = function ()
   // Attach taster handlers on shift
   // to be used as the selection mode trigger
   
-  window.addEventListener('keyup',  (ev) => this.stopSelecting());
+  window.addEventListener('keyup',  (ev) => this.stopSelecting()
+  && this.selector.resetMaskPosition());
   window.addEventListener('keydown',(ev) =>
   (ev.keyCode || ev.which) == 16 && this.startSelecting());
   

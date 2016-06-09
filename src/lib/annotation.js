@@ -1,12 +1,17 @@
+var helpers = require('./utils/helpers');
+
 var RunoverAnnotation = function (target,rect)
 {
   this.target = target;
   
-  this.dom = {};
-  this.stats = {};
-  
-  this.content = '';
-  this._selected = false;
+  this.dom   = {};
+  this.data  = { content:'',stats:{} };
+  this.state = {
+    target:   target,
+    rect:     rect,
+    selected: false,
+    random:   0.1 + Math.random() * 0.2
+  };
   
   this.dom.annotation = document.createElement('div');
   this.dom.annotation.setAttribute('class','runover-annotation');
@@ -65,23 +70,30 @@ RunoverAnnotation.prototype.deselect = function ()
 
 RunoverAnnotation.prototype.recalculate = function ()
 {
-  var rect = this.target.getRect();
+  var rect = this.state.target.getRect();
   
-  var x = (rect.left + rect.width  - 40).toFixed(0);
-  var y = (rect.top  + rect.height - 40).toFixed(0);
+  var cx = typeof this.state.cx === 'number'
+  ? this.state.cx
+  : rect.left + rect.width - 40;
+  var cy = typeof this.state.cy === 'number'
+  ? this.state.cy
+  : rect.top + rect.height - 40;
   
-/*
-  var del = Math.floor((Math.random() * -75) - 25);
-  var dur = 300 - (del * 2);
-*/
+  var tx = rect.left + rect.width  - 40;
+  var ty = rect.top  + rect.height - 40;
   
-  this.dom.annotation.style.transform = 'translate('+x+'px,'+y+'px)';
-/*
-  this.dom.annotation.style.transitionDelay    = del + 'ms';
-  this.dom.annotation.style.transitionDuration = dur + 'ms';
-  
-  this.dom.annotation.setAttribute('style','transform: translate('+x+'px,'+y+'px)');
-*/
+  if (cx === tx && cy === ty) {
+    var nx = tx;
+    var ny = ty;
+  } else {
+    var nx = helpers.tween(cx,tx,this.state.random);
+    var ny = helpers.tween(cy,ty,this.state.random);
+  }
+    
+  this.dom.annotation.style.transform = 'translate('+nx+'px,'+ny+'px)';
+
+  this.state.cx = nx;
+  this.state.cy = ny;
 }
 
 module.exports = RunoverAnnotation;
