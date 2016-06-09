@@ -127,8 +127,7 @@ var RunOver = function ()
   
   Shutter.push(() =>
     this.state.power &&
-    Object.keys(this.annotations).forEach((a) =>
-    this.annotations[a].recalculate()));
+    this.annotations.forEach((a) => a.recalculate()));
   
   // Attach taster handlers on shift
   // to be used as the selection mode trigger

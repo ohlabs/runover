@@ -74,13 +74,13 @@ RunoverAnnotation.prototype.recalculate = function ()
   
   var cx = typeof this.state.cx === 'number'
   ? this.state.cx
-  : rect.left + (rect.width  * this.data.x);
+  : rect.left + (rect.width  * this.data.x) - 14;
   var cy = typeof this.state.cy === 'number'
   ? this.state.cy
-  : rect.top  + (rect.height * this.data.y);
+  : rect.top  + (rect.height * this.data.y) - 15;
   
-  var tx = rect.left + (rect.width  * this.data.x);
-  var ty = rect.top  + (rect.height * this.data.y);
+  var tx = rect.left + (rect.width  * this.data.x) - 14;
+  var ty = rect.top  + (rect.height * this.data.y) - 15;
   
   if (cx === tx && cy === ty) {
     var nx = tx;
