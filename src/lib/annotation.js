@@ -82,6 +82,9 @@ RunoverAnnotation.prototype.recalculate = function ()
   var tx = rect.left + (rect.width  * this.data.x) - 14;
   var ty = rect.top  + (rect.height * this.data.y) - 15;
   
+  if (tx < -100 || tx > window.innerWidth  + 100 ||
+      ty < -100 || ty > window.innerHeight + 100) return;
+  
   if (cx === tx && cy === ty) {
     var nx = tx;
     var ny = ty;
