@@ -1,7 +1,8 @@
 var css = require('raw!./styles/style.styl');
-var Point    = require('./point');
-var Selector = require('./selector');
-var Shutter  = require('./utils/shutter');
+var Point     = require('./point');
+var Selector  = require('./selector');
+var Shutter   = require('./utils/shutter');
+var Mousetrap = require('mousetrap');
 
 /**
  * RunOver
@@ -37,6 +38,12 @@ function RunOver ()
    * @var {array} points
    */
   this.points = [];
+  
+  /**
+   * Global mousetrap instance
+   * @var {Mousetrap} mousetrap
+   */
+  this.mousetrap = new Mousetrap(window);
 
   // Flush initial state into the
   // dom (data-attributes)
@@ -140,11 +147,9 @@ function RunOver ()
   
   // Attach taster handlers on shift
   // to be used as the selection mode trigger
-  
-  window.addEventListener('keyup',  (ev) =>
-  this.stopSelecting());
-  window.addEventListener('keydown',(ev) =>
-  (ev.keyCode || ev.which) == 16 && this.startSelecting());
+
+  this.mousetrap.bind('mod',(ev) => this.stopSelecting(), 'keyup');
+  this.mousetrap.bind('mod',(ev) => this.startSelecting(),'keydown');
   
   this.selector.on('select',(t,r,x,y) => this.useSelection(t,r,x,y));
 }

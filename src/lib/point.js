@@ -41,7 +41,7 @@ function RunoverPoint (target,rect,x,y,measure)
   
   this.dom.text = document.createElement('textarea');
   this.dom.text.readOnly = true;
-  this.dom.text.setAttribute('class','runover-point-text');
+  this.dom.text.setAttribute('class','runover-point-text mousetrap');
   this.dom.message.appendChild(this.dom.text);
   
   this.dom.text.addEventListener('blur',(ev) => {

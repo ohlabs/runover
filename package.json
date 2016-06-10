@@ -13,5 +13,8 @@
     "stylus": "^0.54.5",
     "stylus-mixer": "git+ssh://git@bitbucket.org/ohlab/stylus-mixer.git",
     "webpack": "^1.13.1"
+  },
+  "dependencies": {
+    "mousetrap": "^1.6.0"
   }
 }
