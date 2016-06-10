@@ -7,7 +7,7 @@ var Shutter  = require('./utils/shutter');
  * RunOver
  *
  * Toplevel class of the RunOver system.
- * Handles macro user interactions and manipulates annotations.
+ * Handles macro user interactions and manipulates points.
  *
  * @constructor
  * @since 0.1.0
@@ -34,7 +34,7 @@ var RunOver = function ()
   
   /**
    * Stores session points
-   * @var {array} annotations
+   * @var {array} points
    */
   this.points = [];
 
@@ -64,11 +64,11 @@ var RunOver = function ()
   
   /**
    * Anotations wrapper div
-   * @var {HTMLElement} dom.annotations
+   * @var {HTMLElement} dom.points
    */
   this.dom.points = document.createElement('div');
   this.dom.points.setAttribute('class','runover-points');
-  this.dom.content.appendChild(this.dom.annotations);
+  this.dom.content.appendChild(this.dom.points);
   
   /**
    * Style tag to load stylesheets without an external request
@@ -128,7 +128,7 @@ var RunOver = function ()
   
   Shutter.push(() =>
     this.state.power &&
-    this.annotations.forEach((a) => a.recalculate()));
+    this.points.forEach((a) => a.recalculate()));
   
   // Attach taster handlers on shift
   // to be used as the selection mode trigger
@@ -176,7 +176,7 @@ RunOver.prototype.powerOff = function ()
 
 /**
  * Setup the environment so selection
- * (creating) new annotations is possible.
+ * (creating) new points is possible.
  *
  * @param  {Event}   ev - If passed, will be passed on further
  * @return {RunOver}    - Self
@@ -194,7 +194,7 @@ RunOver.prototype.startSelecting = function (ev)
 
 /**
  * Destroy (and cleanup) the environment suitable
- * for selecting (creating) new annotations.
+ * for selecting (creating) new points.
  *
  * @return {RunOver} - Self
  * @since 0.1.0
