@@ -17,6 +17,11 @@
   position absolute
   pointer-events auto
   will-change transform
+  transition opacity 300ms
 
   [data-runover-selecting='true'] &
     pointer-events none
+
+  [data-runover-hidden='true'] &
+    pointer-events none
+    opacity 0
