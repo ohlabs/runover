@@ -3,7 +3,7 @@ var EE = require('events').EventEmitter;
 var assign = require('lodash/assign');
 var helpers = require('./utils/helpers');
 
-var RunoverSelector = function (mask)
+function RunoverSelector (mask)
 {
   EE.call(this);
   

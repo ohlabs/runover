@@ -12,7 +12,7 @@ var Shutter  = require('./utils/shutter');
  * @constructor
  * @since 0.1.0
  */
-var RunOver = function ()
+function RunOver ()
 {
   /**
    * Stores class internal state
