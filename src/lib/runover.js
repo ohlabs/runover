@@ -47,6 +47,14 @@ function RunOver ()
   this.dom.doc.setAttribute('data-runover-selecting',this.state.selecting);
   
   /**
+   * Style tag to load stylesheets without an external request
+   * @var {HTMLElement} dom.style
+   */
+  this.dom.style = document.createElement('style');
+  this.dom.style.appendChild(document.createTextNode(css));
+  (document.head||document.body||this.dom.doc).appendChild(this.dom.style);
+  
+  /**
    * Content wrapper for the application
    * @var {HTMLElement} dom.content
    */
@@ -63,7 +71,7 @@ function RunOver ()
   this.dom.content.appendChild(this.dom.selector);
   
   /**
-   * Anotations wrapper div
+   * Points wrapper div
    * @var {HTMLElement} dom.points
    */
   this.dom.points = document.createElement('div');
@@ -71,12 +79,12 @@ function RunOver ()
   this.dom.content.appendChild(this.dom.points);
   
   /**
-   * Style tag to load stylesheets without an external request
-   * @var {HTMLElement} dom.style
+   * Div to measure text textarea content
+   * @var {HTMLElement} dom.measure
    */
-  this.dom.style = document.createElement('style');
-  this.dom.style.appendChild(document.createTextNode(css));
-  (document.head||document.body||this.dom.doc).appendChild(this.dom.style);
+  this.dom.measure = document.createElement('div');
+  this.dom.measure.setAttribute('class','measure');
+  this.dom.content.appendChild(this.dom.measure);
   
   /**
    * The Selector instance in use
@@ -218,7 +226,7 @@ RunOver.prototype.stopSelecting = function ()
  */
 RunOver.prototype.useSelection = function (target,rect,x,y)
 {
-  var point = new Point (target,rect,x,y);
+  var point = new Point (target,rect,x,y,this.dom.measure);
   this.points.push(point);
   this.dom.points.appendChild(point.getElement());
   point.select();

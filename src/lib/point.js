@@ -1,6 +1,10 @@
 var helpers = require('./utils/helpers');
 
-function RunoverPoint (target,rect,x,y)
+var measure = document.createElement('div');
+measure.setAttribute('display','none');
+
+
+function RunoverPoint (target,rect,x,y,measure)
 {
   this.target = target;
   
@@ -12,6 +16,8 @@ function RunoverPoint (target,rect,x,y)
     selected: false,
     random:   0.1 + Math.random() * 0.2
   };
+  
+  this.dom.measure = measure;
   
   this.dom.point = document.createElement('div');
   this.dom.point.setAttribute('class','runover-point');
@@ -53,8 +59,8 @@ RunoverPoint.prototype.getElement = function ()
 
 RunoverPoint.prototype.select = function ()
 {
-  if (this._selected) return this;
-  this._selected = true;
+  if (this.state.selected) return this;
+  this.state.selected = true;
   this.dom.text.disabled = false;
   this.dom.point.setAttribute('data-runover-selected',true);
   this.dom.text.focus();
@@ -62,8 +68,8 @@ RunoverPoint.prototype.select = function ()
 
 RunoverPoint.prototype.deselect = function ()
 {
-  if (!this._selected) return this;
-  this._selected = false;
+  if (!this.state.selected) return this;
+  this.state.selected = false;
   this.dom.point.setAttribute('data-runover-selected',false);
   this.dom.text.blur();
   this.dom.text.disabled = true;
@@ -74,11 +80,11 @@ RunoverPoint.prototype.recalculate = function ()
   var rect = this.state.target.getRect();
   
   if (rect.top == 0 && rect.left == 0 && rect.height == 0 && rect.width == 0) {
-    if (this.hidden) this.dom.point.setAttribute('data-runover-hidden',true);
+    if (!this.hidden) this.dom.point.setAttribute('data-runover-hidden',true);
     this.hidden = true;
     return;
   } else {
-    if (!this.hidden) this.dom.point.setAttribute('data-runover-hidden',false);
+    if (this.hidden) this.dom.point.setAttribute('data-runover-hidden',false);
     this.hidden = false;
   }
   
