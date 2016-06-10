@@ -6,38 +6,84 @@
 .runover-point-message
   position relative
   margin 14px
-  transform translate(-50%, -5px)
   opacity 0
+  transform translate(-50%, -5px)
   transition opacity 500ms, transform 500ms
   transition-delay 200ms
   pointer-events none
 
+  // [data-runover-selecting='false']
+  //
+  //   transform translate(-50%, 0)
+  //   opacity 1
+
   &:hover
   .runover-point-pin:hover + &
   [data-runover-editing='true'] &
-    opacity 1
+    pointer-events all
     transform translate(-50%, 0)
-    transition-delay 0ms
-    pointer-events initial
-    z-index 9999
+    opacity 1
+
+  [data-runover-motion='true'] &
+    opacity 0
+    transform translate(-50%, -5px)
+    transition opacity 250ms, transform 250ms
+
+  // [data-runover-selecting='false'] &
+  //
+  //   animate runover-point-message-outro 500ms forwards, \
+  //     0.00% translate(-50%, 0) opacity(1)
+  //
+  // &:hover
+  // .runover-point-pin:hover + &
+  // [data-runover-editing='true'] &
+  //
+  //   [data-runover-selecting='false'] &
+  //
+  //     pointer-events all
+  //     animate runover-point-message-intro 500ms forwards,\
+  //       100.00% translate(-50%, 0) opacity(1)
+
+  // &:before
+  //   content ''
+  //   absolute 0 4px _
+  //   height 22px
+  //   background linear-gradient(to bottom, white, hsla(white, 0))
+  //
+  // &:after
+  //   content ''
+  //   absolute _ 4px 0
+  //   height 22px
+  //   background linear-gradient(to top, white, hsla(white, 0))
 
 .runover-point-text
   resize none
   border none
   outline 0
   padding 16px
-  box-sizing border-box
-  width 180px
-  height 80px
+  box-sizing border-box !important
+  width 140px
+  height 50px
+  max-width 220px
+  max-height 320px
   border-radius 4px
   box-shadow 0 2px 8px hsla(black, 0.2)
+  font-family inherit
+  line-height 1.25
   font-size 0.875rem
   font-weight 500
   color #555
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
 
+.runover-measure
+  max-width 220px
+  max-height 320px
+  padding 16px
+  box-sizing border-box
+
 .runover-point-arrow
+
   &:before
   &:after
     content ''
@@ -49,10 +95,11 @@
     border-radius 2px
 
   &:before
-    box-shadow 0 2px 8px hsla(black, 0.2)
+    box-shadow 1px 1px 8px hsla(black, 0.2)
     transform rotateZ(45deg)
     z-index -1
 
   &:after
     transform rotateZ(45deg)
-    background white
+    background linear-gradient( to bottom right, \
+      white 8px, hsla(white, 0) 8px )
