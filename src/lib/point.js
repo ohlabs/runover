@@ -15,6 +15,7 @@ function RunoverPoint (target,rect,x,y)
   
   this.dom.point = document.createElement('div');
   this.dom.point.setAttribute('class','runover-point');
+  this.dom.point.setAttribute('data-runover-pulse',true);
   
   this.dom.pin = document.createElement('div');
   this.dom.pin.setAttribute('class','runover-point-pin');
@@ -74,18 +75,6 @@ RunoverPoint.prototype.recalculate = function ()
   
   var tx = rect.left + (rect.width  * this.data.x) - 14;
   var ty = rect.top  + (rect.height * this.data.y) - 15;
-  
-  if (this.state.hidden) {
-    if (ty > -100 && ty < window.innerHeight + 100) {
-      this.state.hidden = false;
-      this.dom.point.style.display = 'block';
-    } else return;
-  } else if (ty < -100 || ty > window.innerHeight + 100) {
-    this.state.hidden = true;
-    this.dom.point.style.display = 'none';
-    this.state.cx = this.state.cy = null;
-    return;
-  }
   
   var cx = typeof this.state.cx === 'number'
   ? this.state.cx
