@@ -11,12 +11,14 @@
   padding 10px
   background hsla(red, 0.25)
   transition opacity 250ms
-  cursor pointer
 
   // make sure the selector is in
   // front of available content
   z-index 10**20
   transform translateZ(10**20px)
+
+  [data-runover-selecting='true'] &
+    cursor pointer
 
   [data-runover-selecting='false'] &
   [data-runover-motion='true'] &
