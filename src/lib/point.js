@@ -40,13 +40,20 @@ function RunoverPoint (target,rect,x,y,measure)
   this.dom.message.appendChild(this.dom.info);
   
   this.dom.text = document.createElement('textarea');
-  this.dom.text.disabled = true;
+  this.dom.text.readOnly = true;
   this.dom.text.setAttribute('class','runover-point-text');
   this.dom.message.appendChild(this.dom.text);
   
   this.dom.text.addEventListener('blur',(ev) => {
     ev.preventDefault();
+    ev.stopImmediatePropagation();
     this.deselect();
+  });
+  
+  this.dom.text.addEventListener('click',(ev) => {
+    ev.preventDefault();
+    ev.stopImmediatePropagation();
+    this.select();
   });
   
   this.recalculate();
@@ -61,7 +68,7 @@ RunoverPoint.prototype.select = function ()
 {
   if (this.state.selected) return this;
   this.state.selected = true;
-  this.dom.text.disabled = false;
+  this.dom.text.readOnly = false;
   this.dom.point.setAttribute('data-runover-selected',true);
   this.dom.text.focus();
 }
@@ -72,7 +79,7 @@ RunoverPoint.prototype.deselect = function ()
   this.state.selected = false;
   this.dom.point.setAttribute('data-runover-selected',false);
   this.dom.text.blur();
-  this.dom.text.disabled = true;
+  this.dom.text.readOnly = true;
 }
 
 RunoverPoint.prototype.recalculate = function ()
