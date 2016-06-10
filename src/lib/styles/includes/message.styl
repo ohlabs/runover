@@ -1,17 +1,40 @@
+.runover-point-message
+  position relative
+  margin 14px 0 0 14px
+  transform translateX(-50%)
+
 .runover-point-text
   resize none
   border none
   outline 0
-  margin 14px 0 0 14px
   padding 16px
   box-sizing border-box
   width 180px
   height 80px
   border-radius 4px
   box-shadow 0 2px 8px hsla(black, 0.2)
-  transform translateX(-50%)
   font-size 0.875rem
   font-weight 500
   color #555
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
+
+.runover-point-arrow
+  &:before
+  &:after
+    content ''
+    position absolute
+    top 0
+    left 50%
+    size 12px
+    margin -5px
+    border-radius 2px
+
+  &:before
+    box-shadow 0 2px 8px hsla(black, 0.2)
+    transform rotateZ(45deg)
+    z-index -1
+
+  &:after
+    transform rotateZ(45deg)
+    background white
