@@ -22,6 +22,9 @@
   [data-runover-selecting='true'] &
     pointer-events none
 
-  [data-runover-hidden='true'] &
+  [data-runover-hidden='true']&
     pointer-events none
     opacity 0
+
+  [data-runover-hidden='false']& .runover-point-pin
+    spring-in-place runover-point-pin-rebounce 1000ms, 7, 5, scale(0.2)
