@@ -18,10 +18,10 @@
   user-select none
 
 /**
- * Disables pointer events for all elements while scrolling.
- * Optimizes overall scrolling performance.
+ * Disables pointer events for all runover elements while
+ * scrolling, which optimizes overall scrolling performance.
  * @since 0.1.0
  */
 
-[data-runover-motion='true'] *
+[data-runover-motion='true'] [class^='runover-']
   pointer-events none !important

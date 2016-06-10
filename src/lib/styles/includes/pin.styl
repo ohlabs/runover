@@ -40,7 +40,7 @@
     transform scale(0)
     z-index -1
 
-  &:before
-    animate 2000ms infinite,        \
-      50.0% scale(0.75) opacity(0), \
-      50.1% scale(0) opacity(1)
+    [data-runover-pulse='true'] &
+      animate 2000ms infinite,        \
+        50.0% scale(0.75) opacity(0), \
+        50.1% scale(0) opacity(1)
