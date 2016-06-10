@@ -80,7 +80,6 @@ RunoverPoint.prototype.recalculate = function ()
   } else {
     if (!this.hidden) this.dom.point.setAttribute('data-runover-hidden',false);
     this.hidden = false;
-    return;
   }
   
   var tx = Math.round(rect.left + (rect.width  * this.data.x) - 14);
