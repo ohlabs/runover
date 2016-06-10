@@ -73,8 +73,18 @@ RunoverPoint.prototype.recalculate = function ()
 {
   var rect = this.state.target.getRect();
   
-  var tx = rect.left + (rect.width  * this.data.x) - 14;
-  var ty = rect.top  + (rect.height * this.data.y) - 15;
+  if (rect.top == 0 && rect.left == 0 && rect.height == 0 && rect.width == 0) {
+    if (this.hidden) this.dom.point.setAttribute('data-runover-hidden',true);
+    this.hidden = true;
+    return;
+  } else {
+    if (!this.hidden) this.dom.point.setAttribute('data-runover-hidden',false);
+    this.hidden = false;
+    return;
+  }
+  
+  var tx = Math.round(rect.left + (rect.width  * this.data.x) - 14);
+  var ty = Math.round(rect.top  + (rect.height * this.data.y) - 15);
   
   var cx = typeof this.state.cx === 'number'
   ? this.state.cx
@@ -91,8 +101,9 @@ RunoverPoint.prototype.recalculate = function ()
     var ny = helpers.tween(cy,ty,this.state.random);
   }
   
-  this.dom.point.style.transform = 'translate('+nx+'px,'+ny+'px)';
-
+  this.dom.point.style
+  .transform = 'translate('+nx+'px,'+ny+'px)';
+  
   this.state.cx = nx;
   this.state.cy = ny;
 }
