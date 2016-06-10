@@ -1,6 +1,6 @@
 var helpers = require('./utils/helpers');
 
-var RunoverAnnotation = function (target,rect,x,y)
+function RunoverPoint (target,rect,x,y)
 {
   this.target = target;
   
@@ -13,28 +13,28 @@ var RunoverAnnotation = function (target,rect,x,y)
     random:   0.1 + Math.random() * 0.2
   };
   
-  this.dom.annotation = document.createElement('div');
-  this.dom.annotation.setAttribute('class','runover-annotation');
+  this.dom.point = document.createElement('div');
+  this.dom.point.setAttribute('class','runover-point');
   
   this.dom.pin = document.createElement('div');
-  this.dom.pin.setAttribute('class','runover-annotation-pin');
-  this.dom.annotation.appendChild(this.dom.pin);
+  this.dom.pin.setAttribute('class','runover-point-pin');
+  this.dom.point.appendChild(this.dom.pin);
   
   this.dom.message = document.createElement('div');
-  this.dom.message.setAttribute('class','runover-annotation-message');
-  this.dom.annotation.appendChild(this.dom.message);
+  this.dom.message.setAttribute('class','runover-point-message');
+  this.dom.point.appendChild(this.dom.message);
   
   this.dom.arrow = document.createElement('div');
-  this.dom.arrow.setAttribute('class','runover-annotation-arrow');
+  this.dom.arrow.setAttribute('class','runover-point-arrow');
   this.dom.message.appendChild(this.dom.arrow);
   
   this.dom.info = document.createElement('div');
-  this.dom.info.setAttribute('class','runover-annotation-info');
+  this.dom.info.setAttribute('class','runover-point-info');
   this.dom.message.appendChild(this.dom.info);
   
   this.dom.text = document.createElement('textarea');
   this.dom.text.disabled = true;
-  this.dom.text.setAttribute('class','runover-annotation-text');
+  this.dom.text.setAttribute('class','runover-point-text');
   this.dom.message.appendChild(this.dom.text);
   
   this.dom.text.addEventListener('blur',(ev) => {
@@ -45,32 +45,47 @@ var RunoverAnnotation = function (target,rect,x,y)
   this.recalculate();
 }
 
-RunoverAnnotation.prototype.getElement = function ()
+RunoverPoint.prototype.getElement = function ()
 {
-  return this.dom.annotation;
+  return this.dom.point;
 }
 
-RunoverAnnotation.prototype.select = function ()
+RunoverPoint.prototype.select = function ()
 {
   if (this._selected) return this;
   this._selected = true;
   this.dom.text.disabled = false;
-  this.dom.annotation.setAttribute('data-runover-selected',true);
+  this.dom.point.setAttribute('data-runover-selected',true);
   this.dom.text.focus();
 }
 
-RunoverAnnotation.prototype.deselect = function ()
+RunoverPoint.prototype.deselect = function ()
 {
   if (!this._selected) return this;
   this._selected = false;
-  this.dom.annotation.setAttribute('data-runover-selected',false);
+  this.dom.point.setAttribute('data-runover-selected',false);
   this.dom.text.blur();
   this.dom.text.disabled = true;
 }
 
-RunoverAnnotation.prototype.recalculate = function ()
+RunoverPoint.prototype.recalculate = function ()
 {
   var rect = this.state.target.getRect();
+  
+  var tx = rect.left + (rect.width  * this.data.x) - 14;
+  var ty = rect.top  + (rect.height * this.data.y) - 15;
+  
+  if (this.state.hidden) {
+    if (ty > -100 && ty < window.innerHeight + 100) {
+      this.state.hidden = false;
+      this.dom.point.style.display = 'block';
+    } else return;
+  } else if (ty < -100 || ty > window.innerHeight + 100) {
+    this.state.hidden = true;
+    this.dom.point.style.display = 'none';
+    this.state.cx = this.state.cy = null;
+    return;
+  }
   
   var cx = typeof this.state.cx === 'number'
   ? this.state.cx
@@ -79,12 +94,6 @@ RunoverAnnotation.prototype.recalculate = function ()
   ? this.state.cy
   : rect.top  + (rect.height * this.data.y) - 15;
   
-  var tx = rect.left + (rect.width  * this.data.x) - 14;
-  var ty = rect.top  + (rect.height * this.data.y) - 15;
-  
-  if (tx < -100 || tx > window.innerWidth  + 100 ||
-      ty < -100 || ty > window.innerHeight + 100) return;
-  
   if (cx === tx && cy === ty) {
     var nx = tx;
     var ny = ty;
@@ -92,11 +101,11 @@ RunoverAnnotation.prototype.recalculate = function ()
     var nx = helpers.tween(cx,tx,this.state.random);
     var ny = helpers.tween(cy,ty,this.state.random);
   }
-    
-  this.dom.annotation.style.transform = 'translate('+nx+'px,'+ny+'px)';
+  
+  this.dom.point.style.transform = 'translate('+nx+'px,'+ny+'px)';
 
   this.state.cx = nx;
   this.state.cy = ny;
 }
 
-module.exports = RunoverAnnotation;
+module.exports = RunoverPoint;

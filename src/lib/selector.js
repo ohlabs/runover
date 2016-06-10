@@ -60,9 +60,9 @@ RunoverSelector.prototype.resetMaskPosition = function ()
 
 RunoverSelector.prototype.recalculate = function (x,y)
 {
-  this.dom.mask.style.display = 'none';
+  this.dom.mask.style.pointerEvents = 'none';
   var element = document.elementFromPoint(x,y);
-  this.dom.mask.style.display = 'block';
+  this.dom.mask.style.pointerEvents = 'initial';
   if (element === this.dom.mask) return;
   this.state.element = element;
   
@@ -78,9 +78,9 @@ RunoverSelector.prototype.recalculate = function (x,y)
     var n = c
   } else {
     var n = {
-      top:    helpers.tween(c.top,rect.top,0.2),
-      left:   helpers.tween(c.left,rect.left,0.2),
-      width:  helpers.tween(c.width,rect.width,0.2),
+      top:    helpers.tween(c.top,   rect.top,   0.2),
+      left:   helpers.tween(c.left,  rect.left,  0.2),
+      width:  helpers.tween(c.width, rect.width, 0.2),
       height: helpers.tween(c.height,rect.height,0.2)
     }
   }

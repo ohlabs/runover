@@ -1,8 +1,8 @@
 var exp = module.exports = {};
 
 exp.getDefaultRect = function () { return {
-  left:   window.innerWidth,
   top:    window.innerHeight,
+  left:   window.innerWidth,
   width:  0,
   height: 0
 }};

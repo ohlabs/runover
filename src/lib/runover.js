@@ -1,7 +1,7 @@
 var css = require('raw!./styles/style.styl');
-var Annotation  = require('./annotation');
-var Selector    = require('./selector');
-var Shutter     = require('./utils/shutter');
+var Point    = require('./point');
+var Selector = require('./selector');
+var Shutter  = require('./utils/shutter');
 
 /**
  * RunOver
@@ -33,10 +33,10 @@ var RunOver = function ()
   this.dom = { doc:document.documentElement };
   
   /**
-   * Stores session annotations
+   * Stores session points
    * @var {array} annotations
    */
-  this.annotations = [];
+  this.points = [];
 
   // Flush initial state into the
   // dom (data-attributes)
@@ -66,8 +66,8 @@ var RunOver = function ()
    * Anotations wrapper div
    * @var {HTMLElement} dom.annotations
    */
-  this.dom.annotations = document.createElement('div');
-  this.dom.annotations.setAttribute('class','runover-annotations');
+  this.dom.points = document.createElement('div');
+  this.dom.points.setAttribute('class','runover-points');
   this.dom.content.appendChild(this.dom.annotations);
   
   /**
@@ -110,6 +110,7 @@ var RunOver = function ()
       this.state.cursor = true;
       timeouts.cursor = setTimeout(cursorcb,50) }
     if (ev.type == 'scroll' || ev.type == 'resize') {
+      this.selector.resetMaskPosition();
       clearTimeout(timeouts.motion);
       this.dom.doc.setAttribute('data-runover-motion',true);
       this.state.motion = true;
@@ -214,10 +215,10 @@ RunOver.prototype.stopSelecting = function ()
  */
 RunOver.prototype.useSelection = function (target,rect,x,y)
 {
-  var annotation = new Annotation (target,rect,x,y);
-  this.annotations.push(annotation);
-  this.dom.annotations.appendChild(annotation.getElement());
-  annotation.select();
+  var point = new Point (target,rect,x,y);
+  this.points.push(point);
+  this.dom.points.appendChild(point.getElement());
+  point.select();
 }
 
 /**
