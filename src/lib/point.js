@@ -13,7 +13,7 @@ function RunoverPoint (target,rect,x,y,measure)
   this.state = {
     target:   target,
     rect:     rect,
-    selected: false,
+    editing:  false,
     random:   0.1 + Math.random() * 0.2
   };
   
@@ -47,13 +47,13 @@ function RunoverPoint (target,rect,x,y,measure)
   this.dom.text.addEventListener('blur',(ev) => {
     ev.preventDefault();
     ev.stopImmediatePropagation();
-    this.deselect();
+    this.stopEditing();
   });
   
   this.dom.text.addEventListener('click',(ev) => {
     ev.preventDefault();
     ev.stopImmediatePropagation();
-    this.select();
+    this.startEditing();
   });
   
   this.recalculate();
@@ -64,22 +64,22 @@ RunoverPoint.prototype.getElement = function ()
   return this.dom.point;
 }
 
-RunoverPoint.prototype.select = function ()
+RunoverPoint.prototype.startEditing = function ()
 {
   if (this.state.selected) return this;
-  this.state.selected = true;
-  this.dom.text.readOnly = false;
-  this.dom.point.setAttribute('data-runover-selected',true);
+  this.state.editing = true;
+  this.dom.text.removeAttribute('readonly');
+  this.dom.point.setAttribute('data-runover-editing',true);
   this.dom.text.focus();
 }
 
-RunoverPoint.prototype.deselect = function ()
+RunoverPoint.prototype.stopEditing = function ()
 {
   if (!this.state.selected) return this;
-  this.state.selected = false;
-  this.dom.point.setAttribute('data-runover-selected',false);
+  this.state.editing = false;
+  this.dom.point.setAttribute('data-runover-editing',false);
   this.dom.text.blur();
-  this.dom.text.readOnly = true;
+  this.dom.text.setAttribute('readonly',true);
 }
 
 RunoverPoint.prototype.recalculate = function ()

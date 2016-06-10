@@ -229,7 +229,7 @@ RunOver.prototype.useSelection = function (target,rect,x,y)
   var point = new Point (target,rect,x,y,this.dom.measure);
   this.points.push(point);
   this.dom.points.appendChild(point.getElement());
-  point.select();
+  point.startEditing();
 }
 
 /**
