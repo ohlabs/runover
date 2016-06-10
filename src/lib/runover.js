@@ -133,8 +133,8 @@ var RunOver = function ()
   // Attach taster handlers on shift
   // to be used as the selection mode trigger
   
-  window.addEventListener('keyup',  (ev) => this.stopSelecting()
-  && this.selector.resetMaskPosition());
+  window.addEventListener('keyup',  (ev) =>
+  this.stopSelecting());
   window.addEventListener('keydown',(ev) =>
   (ev.keyCode || ev.which) == 16 && this.startSelecting());
   
@@ -188,6 +188,7 @@ RunOver.prototype.startSelecting = function (ev)
   if (!this.state.power || this.state.selecting) return this;
   this.state.selecting = true;
   this.dom.doc.setAttribute('data-runover-selecting',true);
+  this.selector.start();
   this.selector.recalculate(this.state.mouse.x,this.state.mouse.y);
   return this;
 }
@@ -204,6 +205,8 @@ RunOver.prototype.stopSelecting = function ()
   if (!this.state.power || !this.state.selecting) return this;
   this.state.selecting = false;
   this.dom.doc.setAttribute('data-runover-selecting',false); 
+  this.selector.stop();
+  this.selector.resetMaskPosition();
   return this;
 }
 

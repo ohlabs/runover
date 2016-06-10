@@ -58,11 +58,21 @@ RunoverSelector.prototype.resetMaskPosition = function ()
   this.state.mask = null;
 }
 
+RunoverSelector.prototype.stop = function ()
+{
+  this.dom.mask.style.pointerEvents = 'none';
+}
+
+RunoverSelector.prototype.start = function ()
+{
+  this.dom.mask.style.pointerEvents = 'all';
+}
+
 RunoverSelector.prototype.recalculate = function (x,y)
 {
   this.dom.mask.style.pointerEvents = 'none';
   var element = document.elementFromPoint(x,y);
-  this.dom.mask.style.pointerEvents = 'initial';
+  this.dom.mask.style.pointerEvents = 'all';
   if (element === this.dom.mask) return;
   this.state.element = element;
   
