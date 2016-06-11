@@ -1,8 +1,5 @@
+var EventEmitter = require('events').EventEmitter;
 var helpers = require('./utils/helpers');
-
-var measure = document.createElement('div');
-measure.setAttribute('display','none');
-
 
 function RunoverPoint (target,rect,x,y,measure)
 {
@@ -59,6 +56,8 @@ function RunoverPoint (target,rect,x,y,measure)
   this.recalculate();
 }
 
+RunoverPoint.events = new EventEmitter();
+
 RunoverPoint.prototype.getElement = function ()
 {
   return this.dom.point;
@@ -66,20 +65,28 @@ RunoverPoint.prototype.getElement = function ()
 
 RunoverPoint.prototype.startEditing = function ()
 {
-  if (this.state.selected) return this;
+  if (this.state.editing) return this;
   this.state.editing = true;
   this.dom.text.removeAttribute('readonly');
   this.dom.point.setAttribute('data-runover-editing',true);
   this.dom.text.focus();
+  RunoverPoint.events.last = this;
+  RunoverPoint.events.emit('point-focus',this);
 }
 
 RunoverPoint.prototype.stopEditing = function ()
 {
-  if (!this.state.selected) return this;
+  if (!this.state.editing) return this;
   this.state.editing = false;
   this.dom.point.setAttribute('data-runover-editing',false);
   this.dom.text.blur();
   this.dom.text.setAttribute('readonly',true);
+  RunoverPoint.events.emit('point-blur',this);
+}
+
+RunoverPoint.prototype.isBeingEdited = function ()
+{
+  return this.state.editing;
 }
 
 RunoverPoint.prototype.recalculate = function ()

@@ -20,11 +20,13 @@ function RunOver ()
    * @var {object} state
    */
   this.state = {
-    power:  true,
-    mouse:  { x:0,y:0 },
-    cursor: false,
-    motion: false,
-    selecting: false
+    power:   true,
+    mouse:   { x:0,y:0 },
+    cursor:  false,
+    motion:  false,
+    altdown: false,
+    moddown: false,
+    editing: 0
   }
   
   /**
@@ -90,7 +92,7 @@ function RunOver ()
    * @var {HTMLElement} dom.measure
    */
   this.dom.measure = document.createElement('div');
-  this.dom.measure.setAttribute('class','measure');
+  this.dom.measure.setAttribute('class','runover-measure');
   this.dom.content.appendChild(this.dom.measure);
   
   /**
@@ -120,6 +122,7 @@ function RunOver ()
     if (ev.type == 'mousemove') {
       this.state.mouse.x = ev.clientX;
       this.state.mouse.y = ev.clientY;
+      this.state.moddown && this.state.editing && this.startSelecting(true);
       clearTimeout(timeouts.cursor);
       this.dom.doc.setAttribute('data-runover-cursor',true);
       this.state.cursor = true;
@@ -138,18 +141,30 @@ function RunOver ()
   Shutter.push(() =>
     this.state.power &&
     this.state.selecting &&
-    this.state.cursor &&
     this.selector.recalculate(this.state.mouse.x,this.state.mouse.y));
   
   Shutter.push(() =>
     this.state.power &&
     this.points.forEach((a) => a.recalculate()));
+    
+  Point.events.on('point-focus',(point) => this.state.editing++);
+  Point.events.on('point-blur', (point) => this.state.editing--);
   
   // Attach taster handlers on shift
   // to be used as the selection mode trigger
 
-  this.mousetrap.bind('mod',(ev) => this.stopSelecting(), 'keyup');
-  this.mousetrap.bind('mod',(ev) => this.startSelecting(),'keydown');
+  this.mousetrap.bind('mod',(ev) => {
+    this.state.moddown = true;
+    this.startSelecting();
+  },'keydown');
+  
+  this.mousetrap.bind('mod',(ev) => {
+    this.state.moddown = false;
+    this.stopSelecting();
+  },'keyup');
+  
+  this.mousetrap.bind('alt',(ev) => this.state.altdown = true,'keydown');
+  this.mousetrap.bind('alt',(ev) => this.state.altdown = false,'keyup');
   
   this.selector.on('select',(t,r,x,y) => this.useSelection(t,r,x,y));
 }
@@ -196,7 +211,7 @@ RunOver.prototype.powerOff = function ()
  *
  * @since 0.1.0
  */
-RunOver.prototype.startSelecting = function (ev)
+RunOver.prototype.startSelecting = function (close)
 {
   if (!this.state.power || this.state.selecting) return this;
   this.state.selecting = true;
@@ -235,6 +250,11 @@ RunOver.prototype.useSelection = function (target,rect,x,y)
   this.points.push(point);
   this.dom.points.appendChild(point.getElement());
   point.startEditing();
+}
+
+RunOver.prototype.getEditingPoint = function ()
+{
+  return this.points.find((point) => point.isBeingEdited());
 }
 
 /**

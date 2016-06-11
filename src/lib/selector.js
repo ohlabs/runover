@@ -26,6 +26,16 @@ function RunoverSelector (mask)
   });
 }
 
+RunoverSelector.prototype.stop = function ()
+{
+  this.dom.mask.style.pointerEvents = 'none';
+}
+
+RunoverSelector.prototype.start = function ()
+{
+  this.dom.mask.style.pointerEvents = 'all';
+}
+
 RunoverSelector.prototype.getTarget = function ()
 {
   return this.state.element
@@ -56,16 +66,6 @@ RunoverSelector.prototype.getMask = function ()
 RunoverSelector.prototype.resetMaskPosition = function ()
 {
   this.state.mask = null;
-}
-
-RunoverSelector.prototype.stop = function ()
-{
-  this.dom.mask.style.pointerEvents = 'none';
-}
-
-RunoverSelector.prototype.start = function ()
-{
-  this.dom.mask.style.pointerEvents = 'all';
 }
 
 RunoverSelector.prototype.recalculate = function (x,y)
