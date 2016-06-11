@@ -1,0 +1,19 @@
+/**
+ * --------------------------
+ * Runover Reset (reset.styl)
+ * --------------------------
+ * @since 0.1.0
+ */
+
+$props = \
+  'position', 'display', 'width', 'height', 'top', 'right', 'bottom', 'left', 'margin', 'padding', 'border', 'background', 'color', 'opacity', 'font', 'transform', 'transition', 'animation', 'z-index', 'overflow', 'pointer-events', 'user-select', 'box-sizing'
+
+/**
+ * Iterate through all props listed, and reset their
+ * values to 'initial', within [runover] classes.
+ * @since 0.1.0
+ */
+
+[class^='runover-']
+  for $prop in $props
+    {$prop} initial

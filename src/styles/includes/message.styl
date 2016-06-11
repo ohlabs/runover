@@ -1,10 +1,13 @@
 /**
- * Message // message.styl
+ * ------------------------------
+ * Runover Message (message.styl)
+ * ------------------------------
  * @since 0.1.0
  */
 
 .runover-point-message
   position relative
+  display inline-block
   margin 14px
   opacity 0
   transform translate(-50%, -5px)
@@ -12,10 +15,11 @@
   transition-delay 200ms
   pointer-events none
 
-  // [data-runover-selecting='false']
-  //
-  //   transform translate(-50%, 0)
-  //   opacity 1
+  /**
+   * Show message on pin hover, transfer hover to it's own
+   * element and optionaly lock it, while in editing mode.
+   * @since 0.1.0
+   */
 
   &:hover
   .runover-point-pin:hover + &
@@ -24,82 +28,87 @@
     transform translate(-50%, 0)
     opacity 1
 
-  [data-runover-motion='true'] &
-    opacity 0
-    transform translate(-50%, -5px)
-    transition opacity 250ms, transform 250ms
+/**
+ * Set styling of the textarea within the message.
+ * @since 0.1.0
+ */
 
-  // [data-runover-selecting='false'] &
-  //
-  //   animate runover-point-message-outro 500ms forwards, \
-  //     0.00% translate(-50%, 0) opacity(1)
-  //
-  // &:hover
-  // .runover-point-pin:hover + &
-  // [data-runover-editing='true'] &
-  //
-  //   [data-runover-selecting='false'] &
-  //
-  //     pointer-events all
-  //     animate runover-point-message-intro 500ms forwards,\
-  //       100.00% translate(-50%, 0) opacity(1)
-
-  // &:before
-  //   content ''
-  //   absolute 0 4px _
-  //   height 22px
-  //   background linear-gradient(to bottom, white, hsla(white, 0))
-  //
-  // &:after
-  //   content ''
-  //   absolute _ 4px 0
-  //   height 22px
-  //   background linear-gradient(to top, white, hsla(white, 0))
+// set variables
+$min-width     = 140px
+$min-height    = 50px
+$max-width     = 220px
+$max-height    = 320px
+$padding       = 16px
+$border-radius = 4px
 
 .runover-point-text
-  resize none
-  border none
+  user-select text
+  resize  none
+  border  none
   outline 0
-  padding 16px
-  box-sizing border-box !important
-  width 140px
-  height 50px
-  max-width 220px
-  max-height 320px
-  border-radius 4px
-  box-shadow 0 2px 8px hsla(black, 0.2)
+  background white
+  box-shadow 0 2px 10px hsla(black, 0.2)
   font-family inherit
-  line-height 1.25
-  font-size 0.875rem
-  font-weight 500
+  font-weight inherit
+  font-size   rem(14px)
   color #555
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
+
+  // apply variables
+  width         $min-width
+  height        $min-height
+  min-width     $min-width
+  min-height    $min-height
+  max-width     $max-width
+  max-height    $max-height
+  padding       $padding
+  border-radius $border-radius
+
+/**
+ * Match measure elements styling with
+ * the one from textarea element.
+ * @since 0.1.0
+ */
 
 .runover-measure
-  max-width 220px
-  max-height 320px
-  padding 16px
-  box-sizing border-box
+  min-width  $min-width
+  min-height $min-height
+  max-width  $max-width
+  max-height $max-height
+  padding    $padding
+
+/**
+ * Set styling of the message arrow.
+ * @since 0.1.0
+ */
 
 .runover-point-arrow
 
   &:before
   &:after
     content ''
-    position absolute
-    top 0
-    left 50%
+    absolute 0 _ _ 50%
     size 12px
-    margin -5px -6px
-    border-radius 2px
+    border-radius ( $border-radius / 2 )
+    transform rotate(45deg)
+
+    // center the arrow by moving it to
+    // the left by half it's width and
+    // to the top by half it's height
+    // and half it's border-radius
+    margin -5px 0 0 -6px
 
   &:before
-    box-shadow 1px 1px 8px hsla(black, 0.2)
-    transform rotateZ(45deg)
     z-index -1
 
+    // add box shadow matching to the text
+    // element while offseting it's position
+    // acording to the rotation
+    box-shadow 1px 1px 10px hsla(black, 0.2)
+
   &:after
-    transform rotateZ(45deg)
+
+    // color only the top half of the romboid
+    // preventing the mask over the textarea
     background linear-gradient( to bottom right, \
-      white 8px, hsla(white, 0) 8px )
+      white 8px, hsla( white , 0 ) 8px           \
+    )

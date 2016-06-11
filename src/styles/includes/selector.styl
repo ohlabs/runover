@@ -1,24 +1,50 @@
 /**
- * Selector // selector.styl
+ * --------------------------------
+ * Runover Selector (selector.styl)
+ * --------------------------------
  * @since 0.1.0
  */
 
 .runover-selector
   position fixed
-  margin -10px 0 0 -10px
-  padding 10px
   background hsla(red, 0.25)
-  transition opacity 250ms
+
+  // add additional outter padding
+  // and adjust the new center
+  padding 10px
+  margin -10px 0 0 -10px
+
+  // remove default box model
+  box-sizing initial !important
 
   // make sure the selector is in
   // front of available content
-  z-index 10**20
-  transform translateZ(10**20px)
+  z-index 10**25
+  transform translateZ(10**25px)
 
+  // update the cursor
   [data-runover-selecting='true'] &
     cursor pointer
+
+  /**
+   * Hide the selector when not in selecting mode,
+   * or when there is motion detected.
+   * @since 0.1.0
+   */
+
+  transition opacity 250ms
 
   [data-runover-selecting='false'] &
   [data-runover-motion='true'] &
     opacity 0
+    pointer-events none
+
+/**
+ * Disable pointer events for every [runover] element
+ * except 'selector', while in selecting mode.
+ * @since 0.1.0
+ */
+
+[data-runover-selecting='true'] &
+  [class^='runover-']:not(.runover-selector)
     pointer-events none

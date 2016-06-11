@@ -1,5 +1,7 @@
 /**
- * Point // point.styl
+ * --------------------------
+ * Runover Point (point.styl)
+ * --------------------------
  * @since 0.1.0
  */
 
@@ -8,19 +10,26 @@
 
   // make sure the points are
   // in front of available content
-  z-index 10**20
+  z-index 10**25
 
 .runover-point
   position absolute
   will-change transform
+
+  /**
+   * Handle show/hide animations occuring when
+   * element's target becomes unavailable.
+   * @since 0.1.0
+   */
+
   transition opacity 300ms
 
-  [data-runover-selecting='true'] &
-    pointer-events none
-
+  // fade the element when hidden
   [data-runover-hidden='true']&
     pointer-events none
     opacity 0
 
+  // rebounce the pin when visible
   [data-runover-hidden='false']& .runover-point-pin
-    spring-in-place runover-point-pin-rebounce 1000ms, 7, 5, scale(0.2)
+    spring-in-place \
+      runover-point-pin-rebounce 1000ms, 7, 5, scale(0.2)

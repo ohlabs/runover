@@ -1,23 +1,27 @@
 /**
- * Runover // runover.styl
+ * ----------------------
+ * Runover (runover.styl)
+ * ----------------------
  * @since 0.1.0
  */
 
-.runover-content
-  font-family 'Avenir Next', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif
-
-/**
- * Disable user select for all elements
- * on page, while in selecting mode.
- * @since 0.1.0
- */
-
-[data-runover-selecting="true"] *
+.runover
+  font-family 'Oh Sans', sans-serif
   user-select none
+
+  // antialiasing
+  -webkit-font-smoothing  antialiased
+  -moz-osx-font-smoothing grayscale
+
+  // set custom user-select and box
+  // model for all [runover] elements
+  [class^='runover-']
+    user-select none
+    box-sizing  border-box
 
 /**
  * Disable pointer events for all runover elements while
- * scrolling, which optimizes overall scrolling performance.
+ * scrolling. Optimizes overall scrolling performance.
  * @since 0.1.0
  */
 
