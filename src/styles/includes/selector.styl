@@ -32,7 +32,19 @@
    * @since 0.1.0
    */
 
-  transition opacity 250ms
+  transition opacity 150ms
+
+  &.runover-selector-enter
+    opacity 0
+
+  &.runover-selector-enter-active
+    opacity 1
+
+  &.runover-selector-leave
+    opacity 1
+
+  &.runover-selector-leave-active
+    opacity 0
 
   [data-runover-selecting='false'] &
   [data-runover-motion='true'] &
