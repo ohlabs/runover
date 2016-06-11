@@ -23,8 +23,7 @@
   transform translateZ(10**25px)
 
   // update the cursor
-  [data-runover-selecting='true'] &
-    cursor pointer
+  cursor pointer
 
   /**
    * Hide the selector when not in selecting mode,
@@ -33,17 +32,21 @@
    */
 
   &.runover-selector-enter
-    transition opacity 200ms
+    transition opacity 250ms, transform 250ms
+    transform scale(1.5)
     opacity 0
 
   &.runover-selector-enter-active
+    transform scale(1)
     opacity 1
 
   &.runover-selector-leave
-    transition opacity 100ms
+    transition opacity 150ms, transform 150ms
+    transform scale(1)
     opacity 1
 
   &.runover-selector-leave-active
+    transform scale(0.5)
     opacity 0
 
 /**
