@@ -5,7 +5,6 @@ var MouseTrap = require('mousetrap');
 var EventEmitter = require('events').EventEmitter;
 var Points = require('./RunoverPoints');
 var Selector = require('./RunoverSelector');
-var PointsStore = require('../stores/Points');
 
 var Runover = React.createClass({
   
@@ -27,8 +26,6 @@ var Runover = React.createClass({
     this.events = new EventEmitter();
     this.mousetrap = new MouseTrap(window);
     this.timers = {};
-    
-    PointsStore.on('change',this.forceUpdate);
   },
   
   handleMotionStop: function ()
