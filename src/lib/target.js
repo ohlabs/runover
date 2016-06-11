@@ -1,4 +1,4 @@
-var helpers = require('./utils/helpers');
+var helpers = require('../utils/helpers');
 
 var RunoverTarget = function (element,points)
 {

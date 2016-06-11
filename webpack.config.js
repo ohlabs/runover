@@ -12,10 +12,17 @@ module.exports = {
     path: './dist'
   },
 
-  module: { loaders: [
-    { test:/\.styl(us)?$/, loader:OhPack.loaders.stylus },
-    { test:/\.jsx?$/,      loader:'babel', query: {presets:['es2015']} }
-  ]},
+  module: { loaders: [{
+    test: /\.styl(us)?$/,
+    loader: OhPack.loaders.stylus
+  },{
+    test: /\.jsx?$/,
+    loader: 'babel',
+    exclude: /node_modules/,
+    query: {
+      presets: ['react','es2015']
+    }
+  }]},
 
   plugins: [ new OhPack () ],
 
