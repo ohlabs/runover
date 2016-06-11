@@ -5,6 +5,7 @@ var MouseTrap = require('mousetrap');
 var EventEmitter = require('events').EventEmitter;
 var Points = require('./RunoverPoints');
 var Selector = require('./RunoverSelector');
+var PointsStore = require('../stores/Points');
 
 var Runover = React.createClass({
   
@@ -86,7 +87,7 @@ var Runover = React.createClass({
   
   handleSelect: function (target,rect)
   {
-    this.props.addPoint();
+    PointsStore.addPoint();
   },
   
   componentDidMount: function ()
@@ -104,8 +105,8 @@ var Runover = React.createClass({
   {
     return <div
       className="runover-content"
-      data-motion={this.state.motion}
-      data-cursor={this.state.cursor}
+      data-runover-motion={this.state.motion}
+      data-runover-cursor={this.state.cursor}
     >
       <Points />
       {this.state.mod && !this.state.motion && !this.state.editing
