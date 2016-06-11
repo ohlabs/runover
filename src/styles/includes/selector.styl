@@ -32,24 +32,19 @@
    * @since 0.1.0
    */
 
-  transition opacity 150ms
-
   &.runover-selector-enter
+    transition opacity 200ms
     opacity 0
 
   &.runover-selector-enter-active
     opacity 1
 
   &.runover-selector-leave
+    transition opacity 100ms
     opacity 1
 
   &.runover-selector-leave-active
     opacity 0
-
-  [data-runover-selecting='false'] &
-  [data-runover-motion='true'] &
-    opacity 0
-    pointer-events none
 
 /**
  * Disable pointer events for every [runover] element
