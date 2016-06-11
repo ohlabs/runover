@@ -2,6 +2,7 @@ var React    = require('react');
 var ReactDOM = require('react-dom');
 var Runover  = require('./components/Runover');
 var rawcss   = require('raw!./styles/style.styl');
+// var RAF      = require('react-raf-batching').inject();
 
 if (!global.RUNNING_OVER) {
 

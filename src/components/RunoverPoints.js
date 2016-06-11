@@ -22,19 +22,21 @@ var RunoverPoints = React.createClass({
     var points = PointsStore.getPoints();
     return Object.keys(points).map((id) => <Point
       key={id}
-      data={points[id]}
+      point={points[id]}
     />);
   },
   
   render: function ()
   {
-    return <ReactCSSTransitionGroup
-      component="div"
-      className="runover-points"
-      transitionName="runover-point"
-      transitionEnterTimeout={250}
-      transitionLeaveTimeout={250}
-    >{this.renderPoints()}</ReactCSSTransitionGroup>
+    return <div className="runover-points">
+      <ReactCSSTransitionGroup
+        className="runover-points"
+        component="div"
+        transitionName="runover-selector"
+        transitionEnterTimeout={250}
+        transitionLeaveTimeout={250}
+      >{this.renderPoints()}</ReactCSSTransitionGroup>
+    </div>
   }
   
 });

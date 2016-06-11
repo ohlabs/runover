@@ -19,10 +19,10 @@ store.unsubscribe = function (cb)
   delete handlers[h];
 }
 
-store.addPoint = function (point)
+store.addPoint = function (target)
 {
   var id = (idc++).toString();
-  var point = points[id] = assign((point||{}),{ id:id,text:'' });
+  var point = points[id] = assign((point||{}),{ id:id,text:'',target:target });
   emit();
 }
 
