@@ -1,4 +1,5 @@
 var EventEmitter = require('events').EventEmitter;
+var assign = require('lodash/assign');
 
 var store = module.exports = {};
 var points   = {};
@@ -18,10 +19,10 @@ store.unsubscribe = function (cb)
   delete handlers[h];
 }
 
-store.addPoint = function ()
+store.addPoint = function (point)
 {
   var id = (idc++).toString();
-  var point = points[id] = { id:id,text:'' };
+  var point = points[id] = assign((point||{}),{ id:id,text:'' });
   emit();
 }
 

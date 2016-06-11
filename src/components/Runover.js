@@ -123,16 +123,14 @@ var Runover = React.createClass({
         transitionName="runover-selector"
         transitionEnterTimeout={250}
         transitionLeaveTimeout={250}
-      >
-      {this.state.mod && !this.state.motion && !this.state.editing
-        ? <Selector
-            key={1}
-            x={this.state.mouseX}
-            y={this.state.mouseY}
-            onSelect={this.handleSelect}
-          />
-        : null}
-      </ReactCSSTransitionGroup>
+      >{this.state.mod && !this.state.motion && !this.state.editing
+      ? <Selector
+          key={1}
+          x={this.state.mouseX}
+          y={this.state.mouseY}
+          onSelect={this.handleSelect}
+        />
+      : null}</ReactCSSTransitionGroup>
     </div>
   }
   

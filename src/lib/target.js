@@ -1,26 +1,26 @@
 var helpers = require('../utils/helpers');
 
-var RunoverTarget = function (element,points)
+var RunoverTarget = function (element,segments)
 {
   this._element  = element;
-  this._points   = points || RunoverTarget.element2points(element);
-  this._selector = RunoverTarget.points2selector(this._points);
-  this._path     = RunoverTarget.points2path(this._points);
+  this._segments = segments || RunoverTarget.element2segments(element);
+  this._selector = RunoverTarget.segments2selector(this._segments);
+  this._path     = RunoverTarget.segments2path(this._segments);
 }
 
 RunoverTarget.fromPath = function (path)
 {
-  var points   = RunoverTarget.path2points (path);
-  var selector = RunoverTarget.points2selector(points);
-  return new RunoverTarget (document.querySelector(selector),points);
+  var segments   = RunoverTarget.path2segments (path);
+  var selector = RunoverTarget.segments2selector(segments);
+  return new RunoverTarget (document.querySelector(selector),segments);
 }
 
-RunoverTarget.points2path = function (points)
+RunoverTarget.segments2path = function (segments)
 {
-  return points.map(p => p.join(':')).join('/');
+  return segments.map(p => p.join(':')).join('/');
 }
 
-RunoverTarget.path2points = function (path)
+RunoverTarget.path2segments = function (path)
 {
   return path
   .replace(/^\s*body\s*>\s*/,'')
@@ -28,19 +28,19 @@ RunoverTarget.path2points = function (path)
   .map(p => p.split(':'));
 }
 
-RunoverTarget.points2selector = function (points)
+RunoverTarget.segments2selector = function (segments)
 {
-  if (!points || !points.length) return false;
-  return 'body > ' + points.map(p => p[0]+':nth-child('+p[1]+')')
+  if (!segments || !segments.length) return false;
+  return 'body > ' + segments.map(p => p[0]+':nth-child('+p[1]+')')
   .join(' > ');
 }
 
-RunoverTarget.element2points = function (element)
+RunoverTarget.element2segments = function (element)
 {
   if (!element) return [];
   
   var curr = element;
-  var points = [];
+  var segments = [];
   
   while (curr.parentNode) {
     var parent = curr.parentNode;
@@ -51,12 +51,12 @@ RunoverTarget.element2points = function (element)
       if (child.nodeType !== Node.ELEMENT_NODE) { c++; continue; }
     }
     if (index === false) return [];
-    points.unshift([curr.tagName.toLowerCase(),index]);
+    segments.unshift([curr.tagName.toLowerCase(),index]);
     if (curr.parentNode.tagName === 'BODY') break;
     curr = parent;
   }
   
-  return points;
+  return segments;
 }
 
 RunoverTarget.prototype.getElement = function ()

@@ -28,7 +28,13 @@ var RunoverPoints = React.createClass({
   
   render: function ()
   {
-    return <div className="runover-points">{this.renderPoints()}</div>
+    return <ReactCSSTransitionGroup
+      component="div"
+      className="runover-points"
+      transitionName="runover-point"
+      transitionEnterTimeout={250}
+      transitionLeaveTimeout={250}
+    >{this.renderPoints()}</ReactCSSTransitionGroup>
   }
   
 });
