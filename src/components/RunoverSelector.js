@@ -33,10 +33,10 @@ var RunoverSelector = React.createClass({
     var rect = this.recalculateElementRect();
     
     return {
-      top: rect.top-10,
-      left: rect.left-10,
-      width: rect.width+20,
-      height: rect.height+20
+      top: rect.top,
+      left: rect.left,
+      width: rect.width,
+      height: rect.height
     }
   },
   

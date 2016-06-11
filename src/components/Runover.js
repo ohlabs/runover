@@ -1,8 +1,6 @@
-var React    = require('react');
+var React = require('react');
 var ReactDOM = require('react-dom');
-
 var MouseTrap = require('mousetrap');
-var EventEmitter = require('events').EventEmitter;
 var Points = require('./RunoverPoints');
 var Selector = require('./RunoverSelector');
 var PointsStore = require('../stores/Points');
@@ -33,8 +31,6 @@ var Runover = React.createClass({
   
   componentWillMount: function ()
   {
-    this.events = new EventEmitter();
-    this.mousetrap = new MouseTrap(window);
     this.timers = {};
   },
   
@@ -104,10 +100,10 @@ var Runover = React.createClass({
     window.addEventListener('mousemove',this.handleRepositions);
     window.addEventListener('scroll',   this.handleRepositions);
     window.addEventListener('resize',   this.handleRepositions);
-    this.mousetrap.bind('mod',this.handleTasters,'keydown');
-    this.mousetrap.bind('mod',this.handleTasters,'keyup');
-    this.mousetrap.bind('alt',this.handleTasters,'keydown');
-    this.mousetrap.bind('alt',this.handleTasters,'keyup');
+    MouseTrap.bind('mod',this.handleTasters,'keydown');
+    MouseTrap.bind('mod',this.handleTasters,'keyup');
+    MouseTrap.bind('alt',this.handleTasters,'keydown');
+    MouseTrap.bind('alt',this.handleTasters,'keyup');
   },
   
   render: function ()
