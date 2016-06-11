@@ -1,18 +1,20 @@
-var React    = require('react');
+var React = require('react');
 var ReactDOM = require('react-dom');
-var helpers  = require('../utils/helpers');
-var spring   = { stiffiness:240,damping:26 };
-
 var ReactMotion = require('react-motion');
-var Target      = require('../lib/target');
+var Target = require('../lib/target');
+var helpers = require('../utils/helpers');
+
+var spring = { stiffiness:240,damping:26 };
 
 var RunoverSelector = React.createClass({
   
   handleClick: function (ev)
   {
     if (!this.element || this.element === this.selector) return null;
-    var target = new Target(this.element);
-    this.props.onSelect(target,this.rect);
+    var x = (ev.clientX - this.rect.left) / this.rect.width;
+    var y = (ev.clientY - this.rect.top)  / this.rect.height;
+    var target = new Target(this.element,x,y);
+    this.props.onSelect(target);
   },
   
   recalculateElementRect: function ()

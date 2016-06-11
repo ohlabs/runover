@@ -90,9 +90,9 @@ var Runover = React.createClass({
     this.forceUpdate();
   },
   
-  handleSelect: function (target,rect)
+  handleSelect: function (target)
   {
-    PointsStore.addPoint();
+    PointsStore.addPoint(target);
   },
   
   componentDidMount: function ()
