@@ -1,5 +1,6 @@
 var React    = require('react');
 var ReactDOM = require('react-dom');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 var PointsStore = require('../stores/Points');
 var Point = require('./RunoverPoint');
@@ -19,7 +20,10 @@ var RunoverPoints = React.createClass({
   renderPoints: function ()
   {
     var points = PointsStore.getPoints();
-    return Object.keys(points).map((id) => <Point data={points[id]} />);
+    return Object.keys(points).map((id) => <Point
+      key={id}
+      data={points[id]}
+    />);
   },
   
   render: function ()

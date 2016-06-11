@@ -6,6 +6,15 @@ var EventEmitter = require('events').EventEmitter;
 var Points = require('./RunoverPoints');
 var Selector = require('./RunoverSelector');
 var PointsStore = require('../stores/Points');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+
+var SelectorTransitionGroup = React.createClass({
+  
+  render: function () {
+    return React.Children.toArray(this.props.children)[0] || null;
+  }
+  
+});
 
 var Runover = React.createClass({
   
@@ -109,13 +118,21 @@ var Runover = React.createClass({
       data-runover-cursor={this.state.cursor}
     >
       <Points />
+      <ReactCSSTransitionGroup
+        component={SelectorTransitionGroup}
+        transitionName="runover-selector"
+        transitionEnterTimeout={250}
+        transitionLeaveTimeout={250}
+      >
       {this.state.mod && !this.state.motion && !this.state.editing
         ? <Selector
+            key={1}
             x={this.state.mouseX}
             y={this.state.mouseY}
             onSelect={this.handleSelect}
           />
         : null}
+      </ReactCSSTransitionGroup>
     </div>
   }
   

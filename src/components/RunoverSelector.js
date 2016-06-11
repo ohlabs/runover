@@ -69,7 +69,7 @@ var RunoverSelector = React.createClass({
   
   render: function ()
   {
-    return <ReactMotion.Motion
+    return<ReactMotion.Motion
       defaultStyle={this.getDefaultStyle()}
       style={this.getStyle()}
     >{this.renderSelector}</ReactMotion.Motion>
