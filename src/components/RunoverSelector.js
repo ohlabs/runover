@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ReactMotion = require('react-motion');
 var Target = require('../lib/target');
+var shutter = require('../utils/shutter');
 var helpers = require('../utils/helpers');
 
 var spring = { stiffiness:240,damping:26 };
@@ -17,64 +17,65 @@ var RunoverSelector = React.createClass({
     this.props.onSelect(target);
   },
   
-  recalculateElementRect: function ()
+  getSelectorRef: function (selector)
   {
+    this.selector = selector;
+  },
+  
+  recalculateCycle: function ()
+  {
+    if (!this.selector) return;
+    
+    var state = this.props.state;
+    
     if (this.selector) this.selector.style.pointerEvents = 'none';
-    this.element = document.elementFromPoint(this.props.x,this.props.y);
+    this.element = document.elementFromPoint(state.mouseX,state.mouseY);
     if (this.selector) this.selector.style.pointerEvents = 'all';
     
     var rect = this.rect = this.element
     ? this.element.getBoundingClientRect()
     : helpers.getDefaultRect();
     
-    return rect;
-  },
-  
-  getDefaultStyle: function ()
-  {
-    var rect = this.recalculateElementRect();
+    var c = this.__last_rect
+    ? this.__last_rect
+    : rect;
     
-    return {
-      top: rect.top,
-      left: rect.left,
-      width: rect.width,
-      height: rect.height
+    if (c === rect) {
+      var n = c
+    } else {
+      var n = {
+        top:    helpers.tween(c.top,   rect.top,   0.2),
+        left:   helpers.tween(c.left,  rect.left,  0.2),
+        width:  helpers.tween(c.width, rect.width, 0.2),
+        height: helpers.tween(c.height,rect.height,0.2)
+      }
     }
-  },
-  
-  getStyle: function (prevStyle)
-  {
-    var rect = this.recalculateElementRect();
     
-    return {
-      top: ReactMotion.spring(Math.round(rect.top),spring),
-      left: ReactMotion.spring(Math.round(rect.left),spring),
-      width: ReactMotion.spring(Math.round(rect.width),spring),
-      height: ReactMotion.spring(Math.round(rect.height),spring)
-    }
+    this.selector.style.top    = n.top    + 'px';
+    this.selector.style.left   = n.left   + 'px';
+    this.selector.style.width  = n.width  + 'px';
+    this.selector.style.height = n.height + 'px';
+    
+    this.__last_rect = n;
   },
   
-  getSelectorRef: function (selector)
+  componentDidMount: function ()
   {
-    this.selector = selector;
+    this.shutterId = shutter.push(this.recalculateCycle);
   },
   
-  renderSelector: function (style)
+  componentWillUnmount: function ()
+  {
+    shutter.pop(this.shutterId);
+  },
+  
+  render: function ()
   {
     return <div
       className="runover-selector"
       ref={this.getSelectorRef}
       onClick={this.handleClick}
-      style={style}
     ></div>
-  },
-  
-  render: function ()
-  {
-    return<ReactMotion.Motion
-      defaultStyle={this.getDefaultStyle()}
-      style={this.getStyle()}
-    >{this.renderSelector}</ReactMotion.Motion>
   }
   
 });

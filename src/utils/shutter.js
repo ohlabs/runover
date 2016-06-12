@@ -44,7 +44,7 @@ modx.push = function (cb)
 modx.pop =
 modx.pull = function (id)
 {
-  loop[cb] && size--;
+  loop[id] && size--;
   delete loop[id];
   return modx;
 }

@@ -5,6 +5,8 @@ var Points = require('./RunoverPoints');
 var Selector = require('./RunoverSelector');
 var PointsStore = require('../stores/Points');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+var EventEmitter = require('events').EventEmitter;
+var Shutter = global.shutter = require('../utils/shutter').start();
 
 var SelectorTransitionGroup = React.createClass({
   
@@ -18,6 +20,7 @@ var Runover = React.createClass({
   
   getInitialState: function ()
   {
+    this.boundUpdate = () => this.forceUpdate();
     return {
       power: true,
       motion: false,
@@ -31,19 +34,20 @@ var Runover = React.createClass({
   
   componentWillMount: function ()
   {
+    this.events = new EventEmitter();
     this.timers = {};
   },
   
   handleMotionStop: function ()
   {
     this.state.motion = false;
-    this.forceUpdate();
+//     Shutter.once(this.boundUpdate);
   },
   
   handleCursorStop: function ()
   {
     this.state.cursor = false;
-    this.forceUpdate();
+//     Shutter.once(this.boundUpdate);
   },
   
   handleRepositions: function (ev,key)
@@ -55,23 +59,27 @@ var Runover = React.createClass({
       case 'mousemove':
         this.state.mouseX = ev.clientX;
         this.state.mouseY = ev.clientY;
+/*
         if (this.state.mod && this.state.editing) this.state.editing = 0;
         clearTimeout(this.timers.cursor);
         this.state.cursor = true;
         this.timers.cursor = setTimeout(this.handleCursorStop,60);
+*/
         break;
       case 'resize':
       case 'scroll':
+/*
         clearTimeout(this.timers.motion);
         this.state.motion = true;
         this.timers.motion = setTimeout(this.handleMotionStop,60);
+*/
         break;
       default:
         return;
         
     }
     
-    this.forceUpdate();
+//     this.events.emit('recalculate',this.state)
   },
   
   handleTasters: function (ev,key)
@@ -87,7 +95,7 @@ var Runover = React.createClass({
         return;
     }
     
-    this.forceUpdate();
+    Shutter.once(this.boundUpdate);
   },
   
   handleSelect: function (target)
@@ -108,10 +116,9 @@ var Runover = React.createClass({
   
   render: function ()
   {
+    console.log('render');
     return <div
       className="runover-content"
-      data-runover-motion={this.state.motion}
-      data-runover-cursor={this.state.cursor}
     >
       <Points />
       <ReactCSSTransitionGroup
@@ -122,8 +129,8 @@ var Runover = React.createClass({
       >{this.state.mod && !this.state.motion && !this.state.editing
       ? <Selector
           key={1}
-          x={this.state.mouseX}
-          y={this.state.mouseY}
+          events={this.events}
+          state={this.state}
           onSelect={this.handleSelect}
         />
       : null}</ReactCSSTransitionGroup>
