@@ -41,13 +41,11 @@ var Runover = React.createClass({
   handleMotionStop: function ()
   {
     this.state.motion = false;
-//     Shutter.once(this.boundUpdate);
   },
   
   handleCursorStop: function ()
   {
     this.state.cursor = false;
-//     Shutter.once(this.boundUpdate);
   },
   
   handleRepositions: function (ev,key)
@@ -59,27 +57,14 @@ var Runover = React.createClass({
       case 'mousemove':
         this.state.mouseX = ev.clientX;
         this.state.mouseY = ev.clientY;
-/*
-        if (this.state.mod && this.state.editing) this.state.editing = 0;
-        clearTimeout(this.timers.cursor);
-        this.state.cursor = true;
-        this.timers.cursor = setTimeout(this.handleCursorStop,60);
-*/
         break;
       case 'resize':
       case 'scroll':
-/*
-        clearTimeout(this.timers.motion);
-        this.state.motion = true;
-        this.timers.motion = setTimeout(this.handleMotionStop,60);
-*/
         break;
       default:
         return;
         
     }
-    
-//     this.events.emit('recalculate',this.state)
   },
   
   handleTasters: function (ev,key)
@@ -107,8 +92,6 @@ var Runover = React.createClass({
   {
     this.pointStoreToken = PointsStore.subscribe(() => this.forceUpdate());
     window.addEventListener('mousemove',this.handleRepositions);
-//     window.addEventListener('scroll',   this.handleRepositions);
-//     window.addEventListener('resize',   this.handleRepositions);
     MouseTrap.bind('mod',this.handleTasters,'keydown');
     MouseTrap.bind('mod',this.handleTasters,'keyup');
     MouseTrap.bind('alt',this.handleTasters,'keydown');
@@ -122,7 +105,6 @@ var Runover = React.createClass({
   
   renderPoints: function ()
   {
-    console.log('render points');
     var points = PointsStore.getPoints();
     return Object.keys(points).map((id) => <Point
       key={id}
@@ -132,7 +114,6 @@ var Runover = React.createClass({
   
   render: function ()
   {
-    console.log('render');
     return <div className="runover-content">
       <ReactCSSTransitionGroup
         className="runover-points"
