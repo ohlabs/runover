@@ -55,6 +55,6 @@
  * @since 0.1.0
  */
 
-[data-runover-selecting='true'] &
-  [class^='runover-']:not(.runover-selector)
+  & + [class^='runover-']
+  & + [class^='runover-'] *
     pointer-events none
