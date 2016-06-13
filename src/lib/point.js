@@ -93,15 +93,6 @@ RunoverPoint.prototype.recalculate = function ()
 {
   var rect = this.state.target.getRect();
   
-  if (rect.top == 0 && rect.left == 0 && rect.height == 0 && rect.width == 0) {
-    if (!this.hidden) this.dom.point.setAttribute('data-runover-hidden',true);
-    this.hidden = true;
-    return;
-  } else {
-    if (this.hidden) this.dom.point.setAttribute('data-runover-hidden',false);
-    this.hidden = false;
-  }
-  
   var tx = Math.round(rect.left + (rect.width  * this.data.x) - 14);
   var ty = Math.round(rect.top  + (rect.height * this.data.y) - 15);
   

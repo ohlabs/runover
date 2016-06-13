@@ -4,6 +4,7 @@ var RunoverTarget = function (element,x,y,segments)
 {
   this._element  = element;
   this._x = x; this._y = y;
+  this._r = 0.1 + Math.random() * 0.2;
   this._segments = segments || RunoverTarget.element2segments(element);
   this._selector = RunoverTarget.segments2selector(this._segments);
   this._path     = RunoverTarget.segments2path(this._segments);
@@ -85,8 +86,8 @@ RunoverTarget.prototype.getRect = function ()
 RunoverTarget.prototype.getCurrXY = function ()
 {
   var rect = this.getRect(); return {
-    x: rect.left + (rect.width  * this._x),
-    y: rect.top  + (rect.height * this._y)
+    x: Math.round(rect.left + (rect.width  * this._x)),
+    y: Math.round(rect.top  + (rect.height * this._y))
   }
 }
 

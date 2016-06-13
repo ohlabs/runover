@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var MouseTrap = require('mousetrap');
-var Points = require('./RunoverPoints');
+var Point = require('./RunoverPoint');
 var Selector = require('./RunoverSelector');
 var PointsStore = require('../stores/Points');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
@@ -105,22 +105,41 @@ var Runover = React.createClass({
   
   componentDidMount: function ()
   {
+    this.pointStoreToken = PointsStore.subscribe(() => this.forceUpdate());
     window.addEventListener('mousemove',this.handleRepositions);
-    window.addEventListener('scroll',   this.handleRepositions);
-    window.addEventListener('resize',   this.handleRepositions);
+//     window.addEventListener('scroll',   this.handleRepositions);
+//     window.addEventListener('resize',   this.handleRepositions);
     MouseTrap.bind('mod',this.handleTasters,'keydown');
     MouseTrap.bind('mod',this.handleTasters,'keyup');
     MouseTrap.bind('alt',this.handleTasters,'keydown');
     MouseTrap.bind('alt',this.handleTasters,'keyup');
   },
   
+  componentWillUnmount: function ()
+  {
+    PointsStore.unsubscribe(this.pointStoreToken);
+  },
+  
+  renderPoints: function ()
+  {
+    var points = PointsStore.getPoints();
+    return Object.keys(points).map((id) => <Point
+      key={id}
+      point={points[id]}
+    />);
+  },
+  
   render: function ()
   {
     console.log('render');
-    return <div
-      className="runover-content"
-    >
-      <Points />
+    return <div className="runover-content">
+      <ReactCSSTransitionGroup
+        className="runover-points"
+        component="div"
+        transitionName="runover-selector"
+        transitionEnterTimeout={250}
+        transitionLeaveTimeout={250}
+      >{this.renderPoints()}</ReactCSSTransitionGroup>
       <ReactCSSTransitionGroup
         component={SelectorTransitionGroup}
         transitionName="runover-selector"

@@ -36,27 +36,26 @@ var RunoverPoint = React.createClass({
     
     var coords = this.props.point.target.getCurrXY();
     
-    var c = this.__last_coords
-    ? this.__last_coords
+    var c = this.lastCoords
+    ? this.lastCoords
     : coords;
     
     if (c === coords) {
       var n = c
     } else {
       var n = {
-        x: helpers.tween(c.x,coords.x,0.2),
-        y: helpers.tween(c.y,coords.y,0.2)
+        x: helpers.tween(c.x,coords.x,this.props.point.target._r),
+        y: helpers.tween(c.y,coords.y,this.props.point.target._r)
       };
     }
     
-    this.point.style.webkitTransform =
     this.point.style.transform = 'translate('+n.x+'px,'+n.y+'px)';
     
-    this.__last_coords = n;
+    this.lastCoords = n;
   },
   
   render: function ()
-  { console.log('r point');
+  {
     return <div className="runover-point" ref={this.getPointRef}>
       <div className="runover-point-pin"></div>
     </div>
