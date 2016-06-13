@@ -49,7 +49,7 @@ var RunoverPoint = React.createClass({
       };
     }
     
-    this.point.style.transform = 'translate('+n.x+'px,'+n.y+'px)';
+    this.point.style.transform = 'translate3d('+n.x+'px,'+n.y+'px,0px)';
     
     this.lastCoords = n;
   },

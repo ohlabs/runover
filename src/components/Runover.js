@@ -122,6 +122,7 @@ var Runover = React.createClass({
   
   renderPoints: function ()
   {
+    console.log('render points');
     var points = PointsStore.getPoints();
     return Object.keys(points).map((id) => <Point
       key={id}

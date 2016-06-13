@@ -1,10 +1,14 @@
 var helpers = require('../utils/helpers');
+var shutter = require('../utils/shutter');
+var cache = {};
+
+shutter.push(() => cache = {});
 
 var RunoverTarget = function (element,x,y,segments)
 {
   this._element  = element;
   this._x = x; this._y = y;
-  this._r = 0.1 + Math.random() * 0.2;
+  this._r = 0.15 + Math.random() * 0.2;
   this._segments = segments || RunoverTarget.element2segments(element);
   this._selector = RunoverTarget.segments2selector(this._segments);
   this._path     = RunoverTarget.segments2path(this._segments);
@@ -12,7 +16,7 @@ var RunoverTarget = function (element,x,y,segments)
 
 RunoverTarget.fromPath = function (path)
 {
-  var segments   = RunoverTarget.path2segments (path);
+  var segments = RunoverTarget.path2segments (path);
   var selector = RunoverTarget.segments2selector(segments);
   return new RunoverTarget (document.querySelector(selector),segments);
 }
@@ -78,9 +82,11 @@ RunoverTarget.prototype.getPath = function ()
 
 RunoverTarget.prototype.getRect = function ()
 {
-  return this._element
+  if (cache[this._path]) return cache[this._path];
+  cache[this._path] = this._element
   ? this._element.getBoundingClientRect()
   : helpers.getDefaultRect();
+  return cache[this._path];
 }
 
 RunoverTarget.prototype.getCurrXY = function ()
