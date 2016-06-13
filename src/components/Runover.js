@@ -116,13 +116,6 @@ var Runover = React.createClass({
   {
     return <div className="runover-content">
       <ReactCSSTransitionGroup
-        className="runover-points"
-        component="div"
-        transitionName="runover-selector"
-        transitionEnterTimeout={250}
-        transitionLeaveTimeout={250}
-      >{this.renderPoints()}</ReactCSSTransitionGroup>
-      <ReactCSSTransitionGroup
         component={SelectorTransitionGroup}
         transitionName="runover-selector"
         transitionEnterTimeout={250}
@@ -135,6 +128,13 @@ var Runover = React.createClass({
           onSelect={this.handleSelect}
         />
       : null}</ReactCSSTransitionGroup>
+      <ReactCSSTransitionGroup
+        className="runover-points"
+        component="div"
+        transitionName="runover-selector"
+        transitionEnterTimeout={250}
+        transitionLeaveTimeout={250}
+      >{this.renderPoints()}</ReactCSSTransitionGroup>
     </div>
   }
   

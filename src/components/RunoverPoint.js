@@ -60,7 +60,9 @@ var RunoverPoint = React.createClass({
       <div className="runover-point-pin"></div>
       <div className="runover-point-message">
         <div className="runover-point-arrow"></div>
-        <textarea className="runover-point-text"></textarea>
+        <textarea
+          className="runover-point-text"
+          tabIndex="-1"></textarea>
         <div className="runover-point-info"></div>
       </div>
     </div>
