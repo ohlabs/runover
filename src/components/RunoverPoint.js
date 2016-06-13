@@ -58,10 +58,10 @@ var RunoverPoint = React.createClass({
   {
     return <div className="runover-point" ref={this.getPointRef}>
       <div className="runover-point-pin"></div>
-      <div className="runover-message">
-        <div className="runover-arrow"></div>
-        <textarea className="runover-text"></textarea>
-        <div className="runover-info"></div>
+      <div className="runover-point-message">
+        <div className="runover-point-arrow"></div>
+        <textarea className="runover-point-text"></textarea>
+        <div className="runover-point-info"></div>
       </div>
     </div>
   }
