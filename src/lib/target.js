@@ -2,7 +2,7 @@ var helpers = require('../utils/helpers');
 var shutter = require('../utils/shutter');
 var cache = {};
 
-shutter.push(() => cache = {});
+shutter.push(() => { for (var path in cache) delete cache[path] });
 
 var RunoverTarget = function (element,x,y,segments)
 {

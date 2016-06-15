@@ -1,44 +1,26 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ReactMotion = require('react-motion');
-var helpers = require('../utils/helpers');
-
-var spring = { stiffiness:240,damping:26 };
-
+var ShutterMixin = require('../mixins/Shutter');
 var Store = require('../stores/Points');
 var Point = require('./RunoverPoint');
+var helpers = require('../utils/helpers');
 
 var RunoverPoint = React.createClass({
+  
+  mixins: [ShutterMixin],
   
   shouldComponentUpdate: function (nextProps,nextState)
   {
     return nextProps.point.text !== this.props.point.text
   },
   
-  componentDidMount: function ()
+  handleShutterFrame: function (last)
   {
-    this.shutterId = shutter.push(this.recalculateCycle);
-  },
-  
-  componentWillUnmount: function ()
-  {
-    shutter.pop(this.shutterId);
-  },
-  
-  getPointRef: function (point)
-  {
-    this.point = point;
-  },
-  
-  recalculateCycle: function ()
-  {
-    if (!this.point) return;
+    if (!this.refs.point) return;
     
     var coords = this.props.point.target.getCurrXY();
     
-    var c = this.lastCoords
-    ? this.lastCoords
-    : coords;
+    var c = last || coords;
     
     if (c === coords) {
       var n = c
@@ -49,20 +31,18 @@ var RunoverPoint = React.createClass({
       };
     }
     
-    this.point.style.transform = 'translate3d('+n.x+'px,'+n.y+'px,0px)';
+    this.refs.point.style.transform = 'translate3d('+n.x+'px,'+n.y+'px,0px)';
     
-    this.lastCoords = n;
+    return n;
   },
   
   render: function ()
   {
-    return <div className="runover-point" ref={this.getPointRef}>
+    return <div className="runover-point" ref="point">
       <div className="runover-point-pin"></div>
-      <div className="runover-point-message">
+      <div className="runover-point-content">
         <div className="runover-point-arrow"></div>
-        <textarea
-          className="runover-point-text"
-          tabIndex="-1"></textarea>
+        <div className="runover-point-editor"></div>
         <div className="runover-point-info"></div>
       </div>
     </div>

@@ -1,76 +1,87 @@
-var modx = module.exports = {};
+var shutter = module.exports = {};
 var uidc = 0;
 var size = 0;
 var once = [];
 var loop = {};
-var ison = false;
+var ison = true;
+var keyd = '__SHUTTER_DATA__';
 
-var schedule = 
-window.requestAnimationFrame       ||
+var schedule =
+window      .requestAnimationFrame ||
 window.webkitRequestAnimationFrame ||
-window.mozRequestAnimationFrame    ||
-window.msRequestAnimationFrame     ||
-window.oRequestAnimationFrame      ||
+window   .mozRequestAnimationFrame ||
+window    .msRequestAnimationFrame ||
+window     .oRequestAnimationFrame ||
 function () { setTimeout(cb,20) }
 
 var cycle = function ()
 {
-  if (once.length) for (var i=0;i<once.length;i++) { once[i](); once.shift() }
-  for (var id in loop) loop[id]();
-  ison && schedule(cycle);
+  for (var id in loop) {
+    var cb = loop[id];
+    var data = cb[keyd];
+    if (data.paused || (data.wait && data.wait--)) continue;
+    data.last = cb(data.last);
+    if (data.once) shutter.pop(id);
+  } ison && schedule(cycle);
 }
 
-modx.start = function ()
+shutter.start = function ()
 {
   if (!ison) { ison = true; cycle (); }
-  return modx;
+  return shutter;
 }
 
-modx.stop = function ()
+shutter.stop = function ()
 {
   ison = false;
-  return modx;
+  return shutter;
 }
 
-modx.add =
-modx.push = function (cb)
+shutter.add =
+shutter.push = function (cb)
 {
   var id = (uidc++).toString();
   loop[id] || size++;
+  cb[keyd] = {};
   loop[id] = cb;
   return id;
 }
 
-modx.pop =
-modx.pull = function (id)
+shutter.pop =
+shutter.pull = function (id)
 {
   loop[id] && size--;
+  delete loop[id][keyd];
   delete loop[id];
-  return modx;
+  return shutter;
 }
 
-modx.has
-modx.contains = function (id)
+shutter.has
+shutter.contains = function (id)
 {
   return loop[id]
   ? true
   : false;
 }
 
-modx.run =
-modx.render =
-modx.once = function (cb)
+shutter.run =
+shutter.render =
+shutter.once = function (cb)
 {
+/*
   if (once.indexOf(cb) > -1)
-  return modx;
+  return shutter;
   once.push(cb);
-  return modx;
+  return shutter;
+*/
+  shutter.push(cb);
+  cb[keyd].once = 1;
 }
 
-modx.size
-modx.length = function ()
+shutter.size
+shutter.length = function ()
 {
   return size;
 }
 
-modx.start ();
+cycle ();

@@ -17,28 +17,21 @@ var RunoverSelector = React.createClass({
     this.props.onSelect(target);
   },
   
-  getSelectorRef: function (selector)
+  recalculateCycle: function (last)
   {
-    this.selector = selector;
-  },
-  
-  recalculateCycle: function ()
-  {
-    if (!this.selector) return;
+    if (!this.refs.selector) return;
     
     var state = this.props.state;
     
-    if (this.selector) this.selector.style.pointerEvents = 'none';
+    this.refs.selector.style.pointerEvents = 'none';
     this.element = document.elementFromPoint(state.mouseX,state.mouseY);
-    if (this.selector) this.selector.style.pointerEvents = 'all';
+    this.refs.selector.style.pointerEvents = 'all';
     
     var rect = this.rect = this.element
     ? this.element.getBoundingClientRect()
     : helpers.getDefaultRect();
     
-    var c = this.__last_rect
-    ? this.__last_rect
-    : rect;
+    var c = last || rect;
     
     if (c === rect) {
       var n = c
@@ -51,12 +44,12 @@ var RunoverSelector = React.createClass({
       }
     }
     
-    this.selector.style.top    = n.top    + 'px';
-    this.selector.style.left   = n.left   + 'px';
-    this.selector.style.width  = n.width  + 'px';
-    this.selector.style.height = n.height + 'px';
+    this.refs.selector.style.top    = n.top    + 'px';
+    this.refs.selector.style.left   = n.left   + 'px';
+    this.refs.selector.style.width  = n.width  + 'px';
+    this.refs.selector.style.height = n.height + 'px';
     
-    this.__last_rect = n;
+    return n;
   },
   
   componentDidMount: function ()
@@ -73,7 +66,7 @@ var RunoverSelector = React.createClass({
   {
     return <div
       className="runover-selector"
-      ref={this.getSelectorRef}
+      ref="selector"
       onClick={this.handleClick}
     ></div>
   }

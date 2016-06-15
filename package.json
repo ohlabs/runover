@@ -16,6 +16,7 @@
     "webpack": "^1.13.1"
   },
   "dependencies": {
+    "draft-js": "^0.7.0",
     "mousetrap": "^1.6.0",
     "react": "^15.1.0",
     "react-addons-css-transition-group": "^15.1.0",
