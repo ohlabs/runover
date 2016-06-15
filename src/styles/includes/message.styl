@@ -5,15 +5,16 @@
  * @since 0.1.0
  */
 
-.runover-point-message
+.runover-point-content
   position relative
   display inline-block
   margin 14px
-  opacity 0
-  transform translate(-50%, -5px)
+  // opacity 0
+  // transform translate(-50%, -5px)
+  transform translate(-50%, 0) // @TODO Remove after enabling above
   transition opacity 500ms, transform 500ms
   transition-delay 200ms
-  pointer-events none
+  // pointer-events none
 
   /**
    * Show message on pin hover, transfer hover to it's own
@@ -41,7 +42,7 @@ $max-height    = 320px
 $padding       = 16px
 $border-radius = 4px
 
-.runover-point-text
+.runover-point-editor
   user-select text !important
   resize  none
   border  none
@@ -62,19 +63,6 @@ $border-radius = 4px
   max-height    $max-height
   padding       $padding
   border-radius $border-radius
-
-/**
- * Match measure elements styling with
- * the one from textarea element.
- * @since 0.1.0
- */
-
-.runover-measure
-  min-width  $min-width
-  min-height $min-height
-  max-width  $max-width
-  max-height $max-height
-  padding    $padding
 
 /**
  * Set styling of the message arrow.
