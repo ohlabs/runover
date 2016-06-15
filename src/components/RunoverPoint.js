@@ -2,7 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var ShutterMixin = require('../mixins/Shutter');
 var Store = require('../stores/Points');
-var Point = require('./RunoverPoint');
+var Editor = require('./RunoverEditor');
 var helpers = require('../utils/helpers');
 
 var RunoverPoint = React.createClass({
@@ -42,7 +42,7 @@ var RunoverPoint = React.createClass({
       <div className="runover-point-pin"></div>
       <div className="runover-point-content">
         <div className="runover-point-arrow"></div>
-        <div className="runover-point-editor"></div>
+        <Editor className="runover-point-editor" />
         <div className="runover-point-info"></div>
       </div>
     </div>
