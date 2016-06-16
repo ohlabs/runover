@@ -13,6 +13,8 @@ var RunoverEditor = React.createClass({
   
   shouldComponentUpdate: function (nextProps)
   {
+    if (nextProps.text !== this.state.text)
+    this.handleExternalUpdate(nextProps.text);
     return false;
   },
   
@@ -26,11 +28,10 @@ var RunoverEditor = React.createClass({
   {
     var textContent = this.refs.input.textContent;
     
-    if (!/\n$/.test(textContent)) {
+    if (!/\n$/.test(textContent))
       this.refs.input.appendChild(document.createTextNode('\n'));
-    } else {
+    else
       textContent = textContent.replace(/\n$/,'');
-    }
     
     if (textContent === this.state.text) return;
     
@@ -49,6 +50,7 @@ var RunoverEditor = React.createClass({
     console.log('content:',this.state.empty
     ? null
     : this.state.text);
+    this.renderOutput();
     this.props.onChange &&
     this.props.onChange(this.state.text,this.state.empty);
   },
@@ -79,6 +81,20 @@ var RunoverEditor = React.createClass({
     cdata && cdata.getData &&
     replaceSelectionWithText (cdata.getData('text') || '');
     this.handleChangeAttempt();
+  },
+  
+  handleExternalUpdate: function (textContent)
+  {
+    this.state.text  = textContent || '';
+    this.state.empty = this.state.text.length === 0;
+    this.refs.input.textContent = this.state.text;
+    this.refs.input.appendChild(document.createTextNode('\n'));
+    this.renderOutput();
+  },
+  
+  renderOutput: function ()
+  {
+    this.refs.output.textContent = this.state.text;
   },
   
   render: function ()
