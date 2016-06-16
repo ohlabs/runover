@@ -70,10 +70,18 @@
 
 .runover-editor-output
   display none
-  // display block
   absolute top left
   padding $editor-padding
   max-width $editor-max-width
   max-height $editor-max-height
   white-space pre-wrap
   word-break break-word
+  background white
+  font  inherit
+  color inherit
+
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+
+  [data-runover-focus='false'] &
+    display block
