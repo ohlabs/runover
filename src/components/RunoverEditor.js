@@ -22,7 +22,7 @@ var RunoverEditor = React.createClass({
       if ((ev.keyCode || ev.which) === 13) {
         ev.stopImmediatePropagation();
         ev.preventDefault();
-        this.replaceTextWithSelection('\n');
+        replaceSelectionWithText ('\n');
       }
     });
     
@@ -31,7 +31,7 @@ var RunoverEditor = React.createClass({
       ev.preventDefault();
       var cdata = ev.clipboardData || window.clipboardData;
       cdata && cdata.getData &&
-      this.replaceTextWithSelection(cdata.getData('text') || '');
+      replaceSelectionWithText (cdata.getData('text') || '');
     });
     
     this.refs.editor.appendChild(this.refs.input);
@@ -43,20 +43,6 @@ var RunoverEditor = React.createClass({
     this.refs.input = this.refs.output = null;
   },
   
-  replaceTextWithSelection: function (text)
-  {
-  	var node = document.createTextNode(text);
-    var selection = window.getSelection();
-    var range = selection.getRangeAt(0);
-    range.deleteContents();
-    range.insertNode(node);
-    range.setStartAfter(node);
-    range.setEndAfter(node);
-    range.collapse(false);
-    selection.removeAllRanges();
-    selection.addRange(range);
-  },
-  
   render: function ()
   {
     return <div
@@ -66,5 +52,19 @@ var RunoverEditor = React.createClass({
   }
   
 });
+
+function replaceSelectionWithText (text)
+{
+	var node = document.createTextNode(text);
+  var selection = window.getSelection();
+  var range = selection.getRangeAt(0);
+  range.deleteContents();
+  range.insertNode(node);
+  range.setStartAfter(node);
+  range.setEndAfter(node);
+  range.collapse(false);
+  selection.removeAllRanges();
+  selection.addRange(range);
+}
 
 module.exports = RunoverEditor;
