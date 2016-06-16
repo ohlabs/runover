@@ -6,13 +6,15 @@
  */
 
 .runover-points
-  fixed top left
+  fixed 0
 
   // make sure the points are
   // in front of available content
   z-index 10**20
 
 .runover-point
+  display inline-block
+  max-width 500px
   position absolute
   will-change transform
   margin -14px 0 0 -14px
