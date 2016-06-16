@@ -24,7 +24,7 @@
 
   &:hover
   .runover-point-pin:hover + &
-  [data-runover-editing='true'] &
+  [data-runover-focus='true'] &
     pointer-events all
     transform translate(-50%, 0)
     opacity 1
@@ -35,8 +35,8 @@
  */
 
 // set variables
-$min-width     = 140px
-$min-height    = 50px
+$min-width     = 50px
+$min-height    = 14px
 $max-width     = 220px
 $max-height    = 320px
 $padding       = 16px
@@ -77,11 +77,45 @@ $border-radius = 4px
   max-height $max-height
   padding    $padding * 0.75
 
-  [data-runover-empty='true'] &
-    display block
+  &:before
+    content attr(data-runover-placeholder)
+    absolute top left
+    padding $padding
+    color #aaa
+    opacity 0
+    transition opacity 500ms, transform 300ms
 
   &:after
     content attr(data-runover-placeholder)
+    display  none
+    padding-top -14px
+    overflow hidden
+    color    transparent
+
+  &:focus
+    &:before
+      transform translateX(4px)
+
+  [data-runover-empty='true'] &
+    display block
+    overflow hidden
+    white-space initial
+
+    &:before
+      opacity 1
+
+    &:after
+      display inline-block
+
+.runover-editor-output
+  display none
+  // display block
+  absolute top left
+  padding $padding
+  max-width $max-width
+  max-height $max-height
+  white-space pre-wrap
+  word-break break-word
 
 /**
  * Set styling of the message arrow.
