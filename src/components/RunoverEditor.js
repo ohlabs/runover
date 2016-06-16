@@ -1,5 +1,15 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var ShowDown = require('showdown');
+var showdown = new ShowDown.Converter({
+  noHeaderId: true,
+  parseImgDimensions: true,
+  simplifiedAutoLink: true,
+  omitExtraWLInCodeBlocks: true,
+  literalMidWordUnderscores: true,
+  strikethrough: true,
+  tasklists: true
+});
 
 var RunoverEditor = React.createClass({
   
@@ -94,7 +104,7 @@ var RunoverEditor = React.createClass({
   
   renderOutput: function ()
   {
-    this.refs.output.innerHTML = this.state.text;
+    this.refs.output.innerHTML = showdown.makeHtml(this.state.text);
   },
   
   render: function ()

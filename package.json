@@ -21,6 +21,7 @@
     "react": "^15.1.0",
     "react-addons-css-transition-group": "^15.1.0",
     "react-dom": "^15.1.0",
-    "react-motion": "^0.4.4"
+    "react-motion": "^0.4.4",
+    "showdown": "^1.4.1"
   }
 }
