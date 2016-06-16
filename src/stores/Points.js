@@ -22,7 +22,9 @@ store.unsubscribe = function (cb)
 store.addPoint = function (target)
 {
   var id = (idc++).toString();
-  var point = points[id] = assign((point||{}),{ id:id,text:'',target:target });
+  var point = { fresh:true };
+  assign(point,{ id:id,text:'',target:target });
+  points[id] = point;
   emit();
 }
 

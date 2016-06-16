@@ -79,13 +79,16 @@ var RunoverPoint = React.createClass({
   
   render: function ()
   {
+    var fresh = this.props.point.fresh;
+    this.props.point.fresh = false;
+    
     return <div
       ref="point"
       className="runover-point"
       onMouseEnter={this.handleHover}
       onMouseLeave={this.handleHover}
-      data-runover-focus={this.state.focus}
-      data-runover-hover={this.state.hover}
+      data-runover-focus={fresh || this.state.focus}
+      data-runover-hover={fresh || this.state.hover}
     >
       <div className="runover-point-pin"></div>
       <div className="runover-point-content">
