@@ -49,16 +49,19 @@ $border-radius = 4px
   font-family inherit
   font-weight inherit
   font-size   rem(15px)
-  color #666
+  color #444
 
   // apply variables
   padding       $padding
   border-radius $border-radius
 
 .runover-editor-input
-  display inline-block
-  font-size 1rem
+  display block
   outline 0
+
+  font  inherit
+  color inherit
+
   user-select text !important
 
   white-space pre-wrap
@@ -68,6 +71,9 @@ $border-radius = 4px
   min-height  $min-height
   max-width   $max-width
   max-height  $max-height
+
+  &:not(:empty)
+    display inline-block
 
 /**
  * Set styling of the message arrow.
