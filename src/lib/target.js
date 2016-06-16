@@ -8,7 +8,7 @@ var RunoverTarget = function (element,x,y,segments)
 {
   this._element  = element;
   this._x = x; this._y = y;
-  this._r = 0.15 + Math.random() * 0.2;
+  this._r = 0.08 + Math.random() * 0.18;
   this._segments = segments || RunoverTarget.element2segments(element);
   this._selector = RunoverTarget.segments2selector(this._segments);
   this._path     = RunoverTarget.segments2path(this._segments);
