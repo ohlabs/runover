@@ -7,11 +7,7 @@
 
 .runover-points
   fixed 0
-
-  // make sure the points are
-  // in front of available content
-  z-index 10**10
-  transform translateZ(10**10px)
+  pointer-events none
 
 .runover-point
   display inline-block
@@ -19,6 +15,10 @@
   position absolute
   will-change transform
   margin -14px 0 0 -14px
+
+  // make sure the points are
+  // in front of available content
+  z-index 9999999999999999
 
   /**
    * Handle show/hide animations occuring when
