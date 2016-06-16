@@ -47,7 +47,7 @@ var RunoverEditor = React.createClass({
   handleChange: function ()
   {
     console.log('content:',this.state.empty
-    ? 'is empty'
+    ? null
     : this.state.text);
   },
   
