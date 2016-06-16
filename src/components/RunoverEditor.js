@@ -32,6 +32,33 @@ var RunoverEditor = React.createClass({
   {
     this.text = this.props.text || '';
     this.refs.input.appendChild(document.createTextNode('\n'));
+    this.refs.input.focus ();
+  },
+  
+  handleClick: function (ev)
+  {
+    this.refs.input.focus();
+  },
+  
+  handleFocus: function (ev)
+  {
+    this.props.onFocus &&
+    this.props.onFocus ();
+  },
+  
+  handleBlur: function (ev)
+  {
+    this.props.onBlur &&
+    this.props.onBlur ();
+  },
+  
+  handleExternalUpdate: function (textContent)
+  {
+    this.state.text  = textContent || '';
+    this.state.empty = this.state.text.length === 0;
+    this.refs.input.textContent = this.state.text;
+    this.refs.input.appendChild(document.createTextNode('\n'));
+    this.renderOutput();
   },
   
   handleChangeAttempt: function ()
@@ -93,15 +120,6 @@ var RunoverEditor = React.createClass({
     this.handleChangeAttempt();
   },
   
-  handleExternalUpdate: function (textContent)
-  {
-    this.state.text  = textContent || '';
-    this.state.empty = this.state.text.length === 0;
-    this.refs.input.textContent = this.state.text;
-    this.refs.input.appendChild(document.createTextNode('\n'));
-    this.renderOutput();
-  },
-  
   renderOutput: function ()
   {
     this.refs.output.innerHTML = showdown.makeHtml(this.state.text);
@@ -111,6 +129,7 @@ var RunoverEditor = React.createClass({
   {
     return <div className="runover-editor"
       ref="editor"
+      onClick={this.handleClick}
       data-runover-empty={this.state.empty}
     >
       <div className="runover-editor-input"
@@ -118,6 +137,8 @@ var RunoverEditor = React.createClass({
         contentEditable="true"
         data-runover-placeholder="Thoughts...?"
         tabIndex="-1"
+        onBlur     = {this.handleBlur}
+        onFocus    = {this.handleFocus}
         onInput    = {this.handleChangeAttempt}
         onMouseUp  = {this.handleChangeAttempt}
         onKeyPress = {this.handleKeyPress}

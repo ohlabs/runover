@@ -38,16 +38,6 @@ var Runover = React.createClass({
     this.timers = {};
   },
   
-  handleMotionStop: function ()
-  {
-    this.state.motion = false;
-  },
-  
-  handleCursorStop: function ()
-  {
-    this.state.cursor = false;
-  },
-  
   handleRepositions: function (ev,key)
   {
     if (!this.state.power) return;
@@ -69,7 +59,7 @@ var Runover = React.createClass({
   
   handleTasters: function (ev,key)
   {
-    switch (ev.type) {
+    switch (ev.type || ev) {
       case 'keydown':
         this.state[key] = true;
         break;
@@ -103,12 +93,19 @@ var Runover = React.createClass({
     PointsStore.unsubscribe(this.pointStoreToken);
   },
   
+  killSelector: function ()
+  {
+    this.state.mod = false;
+    this.forceUpdate();
+  },
+  
   renderPoints: function ()
   {
     var points = PointsStore.getPoints();
     return Object.keys(points).map((id) => <Point
       key={id}
       point={points[id]}
+      onFocus={this.killSelector}
     />);
   },
   

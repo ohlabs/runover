@@ -9,9 +9,35 @@ var RunoverPoint = React.createClass({
   
   mixins: [ShutterMixin],
   
+  getInitialState: function ()
+  {
+    return { focus:false };
+  },
+  
   shouldComponentUpdate: function (nextProps,nextState)
   {
     return nextProps.point.text !== this.props.point.text
+  },
+  
+  handleChange: function (text)
+  {
+    //
+  },
+  
+  handleFocus: function ()
+  {
+    this.state.focus = true;
+    this.props.onFocus &&
+    this.props.onFocus ();
+    this.forceUpdate();
+  },
+  
+  handleBlur: function ()
+  {
+    this.state.focus = false;
+    this.props.onBlur &&
+    this.props.onBlur ();
+    this.forceUpdate();
   },
   
   handleShutterFrame: function (last)
@@ -38,11 +64,20 @@ var RunoverPoint = React.createClass({
   
   render: function ()
   {
-    return <div className="runover-point" ref="point">
+    return <div
+      ref="point"
+      className="runover-point"
+      data-runover-focus={this.state.focus}
+    >
       <div className="runover-point-pin"></div>
       <div className="runover-point-content">
         <div className="runover-point-arrow"></div>
-        <Editor className="runover-point-editor" />
+        <Editor
+          text={this.props.point.text}
+          onChange={this.handleUpdate}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+        />
         <div className="runover-point-info"></div>
       </div>
     </div>
