@@ -42,11 +42,8 @@ $max-height    = 320px
 $padding       = 16px
 $border-radius = 4px
 
-.runover-point-editor
-  user-select text !important
-  resize  none
-  border  none
-  outline 0
+.runover-editor
+  display block
   background white
   box-shadow 0 2px 10px hsla(black, 0.2)
   font-family inherit
@@ -55,14 +52,18 @@ $border-radius = 4px
   color #666
 
   // apply variables
-  width         $min-width
-  height        $min-height
-  min-width     $min-width
-  min-height    $min-height
-  max-width     $max-width
-  max-height    $max-height
   padding       $padding
   border-radius $border-radius
+
+.runover-editor-input
+  display block
+  outline 0
+  user-select text !important
+
+  min-width   $min-width
+  min-height  $min-height
+  max-width   $max-width
+  max-height  $max-height
 
 /**
  * Set styling of the message arrow.
