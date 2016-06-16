@@ -1,0 +1,79 @@
+/**
+ * Set styling of the textarea within the message.
+ * @since 0.1.0
+ */
+
+.runover-editor
+  display inline-block
+
+  background white
+  box-shadow 0 2px 10px hsla(black, 0.2)
+
+  font-family inherit
+  font-weight inherit
+  font-size   rem(15px)
+  color #444
+
+  // apply variables
+  padding       $editor-padding * 0.25
+  border-radius $editor-border-radius
+
+.runover-editor-input
+  display  inline-block
+  overflow scroll
+  outline  0
+
+  font  inherit
+  color inherit
+
+  user-select text !important
+
+  white-space pre-wrap
+  word-break  break-word
+
+  // apply variables
+  min-width  $editor-min-width
+  min-height $editor-min-height
+  max-width  $editor-max-width
+  max-height $editor-max-height
+  padding    $editor-padding * 0.75
+
+  &:before
+    content attr(data-runover-placeholder)
+    absolute top left
+    padding $editor-padding
+    color #aaa
+    opacity 0
+    transition opacity 500ms, transform 300ms
+
+  &:after
+    content attr(data-runover-placeholder)
+    display  none
+    padding-top -14px
+    overflow hidden
+    color    transparent
+
+  &:focus
+    &:before
+      transform translateX(4px)
+
+  [data-runover-empty='true'] &
+    display block
+    overflow hidden
+    white-space initial
+
+    &:before
+      opacity 1
+
+    &:after
+      display inline-block
+
+.runover-editor-output
+  display none
+  // display block
+  absolute top left
+  padding $editor-padding
+  max-width $editor-max-width
+  max-height $editor-max-height
+  white-space pre-wrap
+  word-break break-word

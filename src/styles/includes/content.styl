@@ -1,0 +1,66 @@
+/**
+ * ------------------------------
+ * Runover Content (content.styl)
+ * ------------------------------
+ * @since 0.1.0
+ */
+
+.runover-point-content
+  position relative
+  display  block
+  margin 14px
+  opacity 0
+  transform translate(-50%, -5px)
+  transition opacity 500ms, transform 500ms
+  transition-delay 200ms
+  pointer-events none
+
+  /**
+   * Show message on pin hover, transfer hover to it's own
+   * element and optionaly lock it, while in editing mode.
+   * @since 0.1.0
+   */
+
+  &:hover
+  .runover-point-pin:hover + &
+  [data-runover-focus='true'] &
+    pointer-events all
+    transform translate(-50%, 0)
+    opacity 1
+
+/**
+ * Set styling of the message arrow.
+ * @since 0.1.0
+ */
+
+.runover-point-arrow
+
+  &:before
+  &:after
+    content ''
+    absolute 0 _ _ 50%
+    size 12px
+    border-radius ( $editor-border-radius / 2 )
+    transform rotate(45deg)
+
+    // center the arrow by moving it to
+    // the left by half it's width and
+    // to the top by half it's height
+    // and half it's border-radius
+    margin -5px 0 0 -6px
+
+  &:before
+    z-index -1
+
+    // add box shadow matching to the text
+    // element while offseting it's position
+    // acording to the rotation
+    box-shadow 1px 1px 10px hsla(black, 0.2)
+
+  &:after
+
+    // color only the top half of the romboid
+    // preventing the mask over the textarea
+    background linear-gradient( to bottom right, \
+      white 8px, hsla( white , 0 ) 8px           \
+    )
