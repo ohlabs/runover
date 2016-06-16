@@ -8,8 +8,21 @@
 // require [stylus-mixer]
 @require 'stylus-mixer'
 
-// require 'reset' include first
+// require 'reset' include
 @require 'includes/reset'
+
+/**
+ * Configure styling.
+ * @since 0.1.0
+ */
+
+// editor
+$editor-min-width     = 50px
+$editor-min-height    = 14px
+$editor-max-width     = 220px
+$editor-max-height    = 320px
+$editor-padding       = 16px
+$editor-border-radius = 4px
 
 // require all remaining includes
 @require 'includes/*'
