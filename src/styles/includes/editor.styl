@@ -69,12 +69,16 @@
       display inline-block
 
 .runover-editor-output
+  display none
   absolute top left
   white-space pre-wrap
   word-break break-word
   background white
   font  inherit
   color inherit
+  pointer-events none
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
 
   [data-runover-empty='false'] &
     padding $editor-padding
