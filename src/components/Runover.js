@@ -16,15 +16,11 @@ var Runover = React.createClass({
   
   getInitialState: function ()
   {
-    this.boundUpdate = () => this.forceUpdate();
-    return {
+    this.boundUpdate = () => this.forceUpdate(); return {
       power: true,
-      motion: false,
-      cursor: false,
-      mouseX: window.innerWidth,
-      mouseY: window.innerHeight,
-      mod: false,
-      alt: false
+      mouse: { x:window.innerWidth,y:window.innerHeight },
+      mod:   false,
+      alt:   false
     }
   },
   
@@ -55,8 +51,8 @@ var Runover = React.createClass({
     
     switch (ev.type) {
       case 'mousemove':
-        this.state.mouseX = ev.clientX;
-        this.state.mouseY = ev.clientY;
+        this.state.mouse.x = ev.clientX;
+        this.state.mouse.y = ev.clientY;
         break;
       case 'resize':
       case 'scroll':
@@ -106,8 +102,7 @@ var Runover = React.createClass({
       >{this.state.mod && !this.state.editing
       ? <Selector
           key={1}
-          events={this.events}
-          state={this.state}
+          coordinates={this.state.mouse}
           onSelect={this.handleSelect}
         />
       : null}</ReactCSSTransitionGroup>

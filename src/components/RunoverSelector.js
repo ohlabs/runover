@@ -23,10 +23,10 @@ var RunoverSelector = React.createClass({
   {
     if (!this.refs.selector) return;
     
-    var state = this.props.state;
+    var coordinates = this.props.coordinates;
     
     this.refs.selector.style.pointerEvents = 'none';
-    this.element = document.elementFromPoint(state.mouseX,state.mouseY);
+    this.element = document.elementFromPoint(coordinates.x,coordinates.y);
     this.refs.selector.style.pointerEvents = 'all';
     
     var rect = this.rect = this.element
