@@ -26,6 +26,13 @@ var RunoverEditor = React.createClass({
       }
     });
     
+    this.refs.input.addEventListener('keyup',(ev) => {
+      for (var i=0; i<this.refs.input.childNodes.length;i++) {
+        this.refs.input.childNodes[i].nodeType !== Node.TEXT_NODE &&
+        this.refs.input.removeChild(this.refs.input.childNodes[i]);
+      }
+    })
+    
     this.refs.input.addEventListener('paste',(ev) => {
       ev.stopImmediatePropagation();
       ev.preventDefault();
