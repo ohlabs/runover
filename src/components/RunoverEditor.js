@@ -23,7 +23,7 @@ var RunoverEditor = React.createClass({
   
   shouldComponentUpdate: function (nextProps)
   {
-    if (nextProps.text !== this.state.text)
+    if (nextProps.text && nextProps.text !== this.state.text)
     this.handleExternalUpdate(nextProps.text);
     return false;
   },

@@ -31,12 +31,12 @@ var RunoverSelector = React.createClass({
     ? this.element.getBoundingClientRect()
     : helpers.getDefaultRect();
     
-    var c = last || rect;
+    var c = last || rect, n;
     
     if (c === rect) {
-      var n = c
+      n = c
     } else {
-      var n = {
+      n = {
         top:    helpers.tween(c.top,   rect.top,   0.2),
         left:   helpers.tween(c.left,  rect.left,  0.2),
         width:  helpers.tween(c.width, rect.width, 0.2),

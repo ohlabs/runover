@@ -73,7 +73,7 @@ var RunoverPoint = React.createClass({
       <div className="runover-point-content">
         <div className="runover-point-arrow"></div>
         <Editor
-          text={this.props.point.text}
+//           text={this.props.point.text}
           onChange={this.handleUpdate}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
