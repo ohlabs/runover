@@ -94,7 +94,7 @@ var RunoverEditor = React.createClass({
   
   renderOutput: function ()
   {
-    this.refs.output.textContent = this.state.text;
+    this.refs.output.innerHTML = this.state.text;
   },
   
   render: function ()
@@ -106,6 +106,7 @@ var RunoverEditor = React.createClass({
       <div className="runover-editor-input"
         ref="input"
         contentEditable="true"
+        data-runover-placeholder="Thoughts...?"
         tabIndex="-1"
         onInput    = {this.handleChangeAttempt}
         onMouseUp  = {this.handleChangeAttempt}
