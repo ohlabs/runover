@@ -69,19 +69,19 @@
       display inline-block
 
 .runover-editor-output
-  display none
   absolute top left
-  padding $editor-padding
-  max-width $editor-max-width
-  max-height $editor-max-height
   white-space pre-wrap
   word-break break-word
   background white
   font  inherit
   color inherit
 
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
+  [data-runover-empty='false'] &
+    padding $editor-padding
+    max-width $editor-max-width
+    max-height $editor-max-height
 
-  [data-runover-focus='false'] &
-    display block
+    [data-runover-focus='false'] &
+      display block
+      -webkit-font-smoothing antialiased
+      -moz-osx-font-smoothing grayscale
