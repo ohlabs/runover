@@ -8,14 +8,9 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var EventEmitter = require('events').EventEmitter;
 var Shutter = global.shutter = require('../utils/shutter').start();
 
-var SelectorTransitionGroup = React.createClass({
-  
-  render: function () {
-    return React.Children
-    .toArray(this.props.children)[0] || null;
-  }
-  
-});
+var SelectorTransitionGroup = React.createClass({ render: function () {
+  return React.Children.toArray(this.props.children)[0] || null;
+}});
 
 var Runover = React.createClass({
   

@@ -1,12 +1,14 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Target = require('../lib/target');
-var shutter = require('../utils/shutter');
+var ShutterMixin = require('../mixins/Shutter');
 var helpers = require('../utils/helpers');
 
 var spring = { stiffiness:240,damping:26 };
 
 var RunoverSelector = React.createClass({
+  
+  mixins: [ShutterMixin],
   
   handleClick: function (ev)
   {
@@ -17,7 +19,7 @@ var RunoverSelector = React.createClass({
     this.props.onSelect(target);
   },
   
-  recalculateCycle: function (last)
+  handleShutterFrame: function (last)
   {
     if (!this.refs.selector) return;
     
@@ -50,16 +52,6 @@ var RunoverSelector = React.createClass({
     this.refs.selector.style.height = n.height + 'px';
     
     return n;
-  },
-  
-  componentDidMount: function ()
-  {
-    this.shutterId = shutter.push(this.recalculateCycle);
-  },
-  
-  componentWillUnmount: function ()
-  {
-    shutter.pop(this.shutterId);
   },
   
   render: function ()
