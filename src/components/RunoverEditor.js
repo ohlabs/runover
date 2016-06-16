@@ -5,17 +5,34 @@ var RunoverEditor = React.createClass({
   
   shouldComponentUpdate: function (nextProps)
   {
-    return nextProps.text !== this.props.text;
+    return false;
+  },
+  
+  componentDidMount: function ()
+  {
+    this.refs.input  = document.createElement('div');
+    this.refs.input.setAttribute('class','runover-editor-input');
+    this.refs.input.setAttribute('tabindex','-1');
+    this.refs.input.contentEditable = true;
+    
+    this.refs.output = document.createElement('div');
+    this.refs.output.setAttribute('class','runover-editor-output');
+    
+    this.refs.editor.appendChild(this.refs.input);
+    this.refs.editor.appendChild(this.refs.output);
+  },
+  
+  componentWillUnmount: function ()
+  {
+    this.refs.input = this.refs.output = null;
   },
   
   render: function ()
   {
-    return <div className={['runover-editor',this.props.className].join(' ')}>
-      <div className="runover-editor-input"  ref="input"
-        contentEditable
-        tabIndex="-1"></div>
-      <div className="runover-editor-output" ref="output"></div>
-    </div>
+    return <div
+      className={['runover-editor',this.props.className].join(' ')}
+      ref="editor"
+    ></div>
   }
   
 });
