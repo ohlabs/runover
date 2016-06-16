@@ -11,7 +11,8 @@ var Shutter = global.shutter = require('../utils/shutter').start();
 var SelectorTransitionGroup = React.createClass({
   
   render: function () {
-    return React.Children.toArray(this.props.children)[0] || null;
+    return React.Children
+    .toArray(this.props.children)[0] || null;
   }
   
 });
@@ -38,46 +39,6 @@ var Runover = React.createClass({
     this.timers = {};
   },
   
-  handleRepositions: function (ev,key)
-  {
-    if (!this.state.power) return;
-    
-    switch (ev.type) {
-      
-      case 'mousemove':
-        this.state.mouseX = ev.clientX;
-        this.state.mouseY = ev.clientY;
-        break;
-      case 'resize':
-      case 'scroll':
-        break;
-      default:
-        return;
-        
-    }
-  },
-  
-  handleTasters: function (ev,key)
-  {
-    switch (ev.type || ev) {
-      case 'keydown':
-        this.state[key] = true;
-        break;
-      case 'keyup':
-        this.state[key] = false;
-        break;
-      default:
-        return;
-    }
-    
-    Shutter.once(this.boundUpdate);
-  },
-  
-  handleSelect: function (target)
-  {
-    PointsStore.addPoint(target);
-  },
-  
   componentDidMount: function ()
   {
     this.pointStoreToken = PointsStore.subscribe(() => this.forceUpdate());
@@ -93,10 +54,40 @@ var Runover = React.createClass({
     PointsStore.unsubscribe(this.pointStoreToken);
   },
   
+  handleRepositions: function (ev,key)
+  {
+    if (!this.state.power) return;
+    
+    switch (ev.type) {
+      case 'mousemove':
+        this.state.mouseX = ev.clientX;
+        this.state.mouseY = ev.clientY;
+        break;
+      case 'resize':
+      case 'scroll':
+        break;
+      default:
+        return;
+    }
+  },
+  
+  handleTasters: function (ev,key)
+  {
+    switch (ev.type || ev) {
+      case 'keydown': this.state[key] = true;  break;
+      case 'keyup':   this.state[key] = false; break;
+      default:        return;
+    } Shutter.once(this.boundUpdate);
+  },
+  
+  handleSelect: function (target)
+  {
+    PointsStore.addPoint(target);
+  },
+  
   killSelector: function ()
   {
-    this.state.mod = false;
-    this.forceUpdate();
+    this.handleTasters('keyup','mod');
   },
   
   renderPoints: function ()
