@@ -51,7 +51,7 @@ var RunoverPoint = React.createClass({
       this.state.hover = true;
       this.refs.point.setAttribute('data-runover-hover',true);
     } else {
-      this.hoverTimeout = setTimeout(this.boundHoverCallback,1000);
+      this.hoverTimeout = setTimeout(this.boundHoverCallback,500);
     }
   },
   
