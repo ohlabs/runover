@@ -49,6 +49,8 @@ var RunoverEditor = React.createClass({
     console.log('content:',this.state.empty
     ? null
     : this.state.text);
+    this.props.onChange &&
+    this.props.onChange(this.state.text,this.state.empty);
   },
   
   handleKeyPress: function (ev)
